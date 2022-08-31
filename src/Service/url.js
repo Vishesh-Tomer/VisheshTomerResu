@@ -1,0 +1,1 @@
+export const API_URL = "https://resume-api.apikart.co/v1";
