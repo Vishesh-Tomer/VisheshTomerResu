@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import Dashboard from "views/Dashboard";
+import { useHistory, Link } from "react-router-dom";
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./style.scss";
 import { LOGIN } from "../../Service/auth";
@@ -24,31 +24,20 @@ function Login() {
   };
   const login = async (e) => {
     e.preventDefault();
-    //   await LOGIN(values).then((response)=>
-    //   //console.log(response.data.data.token, "respni"),
-    //     localStorage.setItem("Token" , response.data.data.token),
-    //     //localStorage.setItem("Admin" , response.data.data.user_info),
-    //    navigate('/manageuser')).catch((err)=>{
-    //       console.log(err , "err")
-    //   })
     const response = await LOGIN(values);
-    //   const [response] = await Promise.allSettled([LOGIN(values)])
     console.log(response, "respoonse");
-    if (response?.data.admin) {
+    if (response?.data.code===200) {
       history.push("/dashboard");
       localStorage.setItem("token", response?.data?.data?.token);
       localStorage.setItem(
         "resObj",
         JSON.stringify(response?.data?.user_info)
       );
-      window.location.reload();
       history.push("/dashboard");
       toast.success(response?.data?.message);
     } else {
       toast.error(response?.data?.message);
     }
-    //   return
-    // console.log(localStorage.getItem('resObj'), 'localStorage')
   };
 
   return (
@@ -83,7 +72,7 @@ function Login() {
                     <span
                       className="link-forgot cursor-pointer"
                       onClick={() => {
-                        history.push("/dashboard");
+                        history.push("/ForgetPassword");
                       }}
                     >
                       Forgot password?
@@ -98,6 +87,7 @@ function Login() {
                     >
                       Login
                     </button>
+                    <ToastContainer />
                   </div>
                 </Col>
               </Row>

@@ -25,6 +25,11 @@ import "./assets/css/animate.min.css";
 import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
 import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Login from "views/Login/Index";
+import ForgetPass from "views/ForgetPassword";
+import ChangePass from "views/ChangePassword";
+import Register from "views/Register";
+
 
 import AdminLayout from "layouts/Admin.js";
 
@@ -33,8 +38,22 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Switch>
+    
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/login">
+        <Login />
+      </Route>
+      <Route path="/forgetpassword">
+        <ForgetPass/>
+      </Route>
+      <Route path="/register">
+        <Register/>
+      </Route>
+      <Route path="/changepassword">
+        <ChangePass/>
+      </Route>
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>
   </BrowserRouter>
+
 );

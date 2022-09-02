@@ -5,15 +5,14 @@ import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./style.scss";
-import { Registe } from "../../Service/auth";
+import { ChangePas } from "../../Service/auth";
 
-function Register() {
+function ChangePass() {
   const history = useHistory();
 
   const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
+    password : "",
+    oldPassword : ""
   });
 
   const handleChange = (e) => {
@@ -26,17 +25,15 @@ function Register() {
   const login = async (e) => {
     e.preventDefault();
     
-    const response = await Registe(values);
-   
+    const response = await ChangePas(values);
     console.log(response, "respoonse");
-    if (response?.data.code === 200) {
-      history.push("/login");
+    if (response?.data.code===200) {
       localStorage.setItem("token", response?.data?.data?.token);
       localStorage.setItem(
         "resObj",
         JSON.stringify(response?.data?.user_info)
       );
-      history.push("/login");
+      window.location.reload();
       toast.success(response?.data?.message);
     } else {
       toast.error(response?.data?.message);
@@ -47,24 +44,19 @@ function Register() {
     <>
       <div className="main-wrapper-login">
         <div className="Login-wrapper">
+        <div className="forgt-txt-head text-center mb-5">
+            <h1>Change Password</h1>
+            <p>Please enter your New Password And Old Password.</p>
+          </div>
           <div className="loginbody--form">
             <Form onSubmit={login}>
               <Row>
               <Col xs="12">
                   <Form.Control
-                    type="text"
+                    type="password"
                     className="input-login-control mb-4"
-                    placeholder="Enter Your Name"
-                    name="name"
-                    onChange={handleChange}
-                  />
-                </Col>
-                <Col xs="12">
-                  <Form.Control
-                    type="email"
-                    className="input-login-control mb-4"
-                    placeholder="Email"
-                    name="email"
+                    placeholder="New Password"
+                    name="password"
                     onChange={handleChange}
                   />
                 </Col>
@@ -72,36 +64,35 @@ function Register() {
                   <Form.Control
                     type="password"
                     className="input-login-control mb-4"
-                    placeholder="Password"
-                    name="password"
+                    placeholder="Old Password"
+                    name="old Password"
                     onChange={handleChange}
                   />
                 </Col>
+                <Col xs="12">
+                  <div className="login-login">
+                    <button type="submit" className="btn btn-login">
+                      Continue
+                    </button>
+                  </div>
+                </Col>
                 
-
-                <Col xs="6">
-                  <div className="forgot--txtlink text-end mb-5">
-                    <span
-                      className="link-forgot cursor-pointer"
+                <Col xs="12">
+                  <div className="login-back-btn text-center mt-5">
+                    {" "}
+                    <p>Back To Login </p>{" "}
+                    <a
+                      href="#"
+                      className="btn btn-login-back"
                       onClick={() => {
                         history.push("/login");
                       }}
                     >
-                      Click here to Login
-                    </span>
+                      Click Here
+                    </a>
                   </div>
                 </Col>
-                <Col xs="12">
-                  <div className="login-login">
-                    <button
-                      type="submit"
-                      className="btn btn-login cursor-pointer"
-                    >
-                      Register Now
-                    </button>
-                    <ToastContainer />
-                  </div>
-                </Col>
+                <ToastContainer />     
               </Row>
             </Form>
           </div>
@@ -110,4 +101,4 @@ function Register() {
     </>
   );
 }
-export default Register;
+export default ChangePass;

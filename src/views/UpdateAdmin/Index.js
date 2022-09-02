@@ -70,10 +70,19 @@ function Register() {
                 </Col>
                 <Col xs="12">
                   <Form.Control
+                    type="number"
+                    className="input-login-control mb-4"
+                    placeholder="Phone Number"
+                    name="phone"
+                    onChange={handleChange}
+                  />
+                </Col>
+                <Col xs="12">
+                  <Form.Control
                     type="password"
                     className="input-login-control mb-4"
                     placeholder="Password"
-                    name="password"
+                    name="type"
                     onChange={handleChange}
                   />
                 </Col>

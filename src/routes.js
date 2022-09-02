@@ -22,10 +22,8 @@ import Typography from "views/Typography.js";
 import Icons from "views/Icons.js";
 import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
-import Login from "./views/Login/Index";
-import Register from "./views/Register/index";
-import ForgetPass from "views/ForgetPassword/index";
-
+import AdminCreate from "views/AdminCreate"
+import AdminUserCreating from "views/adminUserCreating"
 
 const dashboardRoutes = [
   {
@@ -36,8 +34,15 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/user",
-    name: "User Profile",
+    path: "/adminusercreating",
+    name: "Admin User Creating",
+    icon: "nc-icon nc-circle-09",
+    component: AdminUserCreating,
+    layout: "/admin"
+  },
+  {
+    path: "/adminprofile",
+    name: "Admin Profile",
     icon: "nc-icon nc-circle-09",
     component: UserProfile,
     layout: "/admin"
@@ -75,27 +80,6 @@ const dashboardRoutes = [
     name: "Notifications",
     icon: "nc-icon nc-bell-55",
     component: Notifications,
-    layout: "/admin"
-  },
-  {
-    path: "/login",
-    name: "Login",
-    icon: "nc-tap-01",
-    component: Login,
-    layout: "/admin"
-  },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "nc-tap-01",
-    component: Register,
-    layout: "/admin"
-  },
-  {
-    path: "/forgetpassword",
-    name: "Forget Password",
-    icon: "nc-tap-01",
-    component: ForgetPass,
     layout: "/admin"
   }
 ];
