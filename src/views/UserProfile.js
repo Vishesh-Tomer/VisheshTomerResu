@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAdmin } from "Service/auth";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // react-bootstrap components
 import {
@@ -16,25 +16,28 @@ import {
 } from "react-bootstrap";
 
 function User() {
+  const history = useHistory();
   const [adminInfo, setAdminInfo] = useState({});
-  const { id } = useParams();
+  const resobject = JSON.parse(localStorage.getItem('resObj'))
+  const id = resobject.id
+  console.log(id)
   useEffect(() => {
     const getData = async () => {
       const response = await getAdmin({ id });
       console.log("getAdmin", response);
-      if (response?.data?.admin) {
-        setAdminInfo(response?.data?.data);
-      } 
+        setAdminInfo(response?.data);
+        
     };
     getData();
   }, [id]);
+  console.log("setAdminInfo",adminInfo);
 
 
   return (
-    <>
-      <Container fluid>
+    <> 
+      <Container pt-3>
         <Row>
-          <Col md="4">
+          <Col >
             <Card className="card-user">
               <div className="card-image">
                 <img
@@ -50,14 +53,29 @@ function User() {
                       className="avatar border-gray"
                       src={require("assets/img/faces/face-3.jpg")}
                     ></img>
-                    <h5 className="title">{adminInfo.name}</h5>
+                    <h3 className="title">Admin Name  :-  {adminInfo.name}</h3>
                   </a>
-                  <p className="description">{adminInfo.email}</p>
+                  <p></p>
+                  <p className="description">Admin Email :-  {adminInfo.email}</p>
                 </div>
                 <p className="description text-center">
-                {adminInfo.type}
+                Admin Type  :-   {adminInfo.type}
                 </p>
               </Card.Body>
+              <Row>
+              <Col  style={{textAlign : 'center'}} xs="2">
+                  <div className="login-login">
+                    <button
+                      className="btn btn-login cursor-pointer"
+                      onClick={() => {
+                        history.push("/updateadmin");
+                      }}
+                    >
+                      Update Profile
+                    </button>
+                  </div>
+                </Col>
+                </Row>
               <hr></hr>
               <div className="button-container mr-auto ml-auto">
                 <Button

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -28,10 +28,10 @@ function Login() {
     console.log(response, "respoonse");
     if (response?.data.code===200) {
       history.push("/dashboard");
-      localStorage.setItem("token", response?.data?.data?.token);
+      localStorage.setItem("token", response?.data?.data?.tokens.refresh.token);
       localStorage.setItem(
         "resObj",
-        JSON.stringify(response?.data?.user_info)
+        JSON.stringify(response?.data?.data?.admin)
       );
       history.push("/dashboard");
       toast.success(response?.data?.message);

@@ -24,6 +24,7 @@ import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
 import AdminCreate from "views/AdminCreate"
 import AdminUserCreating from "views/adminUserCreating"
+import ManageUser from "views/ManageUser/index"
 
 const dashboardRoutes = [
   {
@@ -45,6 +46,13 @@ const dashboardRoutes = [
     name: "Admin Profile",
     icon: "nc-icon nc-circle-09",
     component: UserProfile,
+    layout: "/admin"
+  },
+  {
+    path: "/manageuser",
+    name: "Manage User",
+    icon: "nc-icon nc-circle-09",
+    component: ManageUser,
     layout: "/admin"
   },
   {

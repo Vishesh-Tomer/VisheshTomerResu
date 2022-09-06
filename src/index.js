@@ -29,16 +29,19 @@ import Login from "views/Login/Index";
 import ForgetPass from "views/ForgetPassword";
 import ChangePass from "views/ChangePassword";
 import Register from "views/Register";
+import UpdateAdmin from "views/UpdateAdmin/Index"
+import EditUser from "views/ManageUser/editUser";
 
 
 import AdminLayout from "layouts/Admin.js";
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
     <Switch>
-    
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/login">
         <Login />
@@ -49,10 +52,18 @@ root.render(
       <Route path="/register">
         <Register/>
       </Route>
+      <Route path="/edituser">
+        <EditUser/>
+      </Route>
       <Route path="/changepassword">
         <ChangePass/>
       </Route>
+      <Route path="/updateadmin">
+        <UpdateAdmin/>
+      </Route>
       <Redirect from="/" to="/admin/dashboard" />
+      
+  
     </Switch>
   </BrowserRouter>
 

@@ -1,5 +1,8 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import ChartistGraph from "react-chartist";
+import Cookies from "universal-cookie";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 // react-bootstrap components
 import {
   Badge,
@@ -17,6 +20,22 @@ import {
 } from "react-bootstrap";
 
 function Dashboard() {
+  const history = useHistory();
+
+  const cookie = new Cookies();
+  const token = cookie.get("token");
+
+  useEffect(() => {
+    if (!token) {
+      toast.warning(
+        "your session has been expired ...kindly login again.",
+        "yellow"
+      );
+      history.push(`/login`);
+    }
+  }, []);
+
+
   return (
     <>
       <Container fluid>

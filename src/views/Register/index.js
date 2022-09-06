@@ -29,17 +29,15 @@ function Register() {
     const response = await Registe(values);
    
     console.log(response, "respoonse");
-    if (response?.data.code === 200) {
-      history.push("/login");
-      localStorage.setItem("token", response?.data?.data?.token);
+    if (response?.data.user?.code === 200) {
+      localStorage.setItem("token", response?.data?.data?.tokens.refresh.token);
       localStorage.setItem(
         "resObj",
-        JSON.stringify(response?.data?.user_info)
+        JSON.stringify(response?.data?.user?.data)
       );
-      history.push("/login");
-      toast.success(response?.data?.message);
+      toast.success(response?.data?.user?.message);
     } else {
-      toast.error(response?.data?.message);
+      toast.error(response?.data?.user?.message);
     }
   };
 
