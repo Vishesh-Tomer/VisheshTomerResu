@@ -25,6 +25,7 @@ import Notifications from "views/Notifications.js";
 import AdminCreate from "views/AdminCreate"
 import AdminUserCreating from "views/adminUserCreating"
 import ManageUser from "views/ManageUser/index"
+import AdminUserResume from "views/ShowResume.js/showResume"
 
 const dashboardRoutes = [
   {
@@ -46,6 +47,13 @@ const dashboardRoutes = [
     name: "Manage Resume",
     icon: "nc-icon nc-circle-09",
     component: AdminUserCreating,
+    layout: "/admin"
+  },
+  {
+    path: "/adminuserresume",
+    name: "Show Resume",
+    icon: "nc-icon nc-circle-09",
+    component: AdminUserResume,
     layout: "/admin"
   },
   

@@ -111,14 +111,14 @@ function Home() {
           </select>
         </div>
             <div className="search">
-              {/* <form className="form-inline">
+              <form className="form-inline">
                 <input
                   className="form-control mr-sm-2"
                   type="search"
                   placeholder="Search User"
                   aria-label="Search"
                 />
-              </form> */}
+              </form>
             </div>
           </div>
          <div

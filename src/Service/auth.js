@@ -9,7 +9,7 @@ var UserAddAdmin = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBm
 var UserCreateAdmin = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxOTQzNDgsImV4cCI6MTY2NDc4NjM0OCwidHlwZSI6InJlZnJlc2gifQ.F74wz5E_UmpW3vPxufGoBinBsB6OQbV9TsNYUIKHvpE`
 var DeleteUser = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxODYwMTEsImV4cCI6MTY2NDc3ODAxMSwidHlwZSI6InJlZnJlc2gifQ.djCuEWN0OFVEN5mP8TgBuiyZN8jSbrJcH7fv70cT114`
 var updateuser = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxODYwMTEsImV4cCI6MTY2NDc3ODAxMSwidHlwZSI6InJlZnJlc2gifQ.djCuEWN0OFVEN5mP8TgBuiyZN8jSbrJcH7fv70cT114`
-
+var getResum = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxODYwMTEsImV4cCI6MTY2NDc3ODAxMSwidHlwZSI6InJlZnJlc2gifQ.djCuEWN0OFVEN5mP8TgBuiyZN8jSbrJcH7fv70cT114`
 
 
 export async function LOGIN(requestData) {
@@ -160,4 +160,17 @@ export async function deleteUser() {
     } else {
       return {};
     }
+}
+
+
+export async function getResume(requestData) {
+  axios.defaults.headers.common["Authorization"] = getResum
+
+  var response = await axios.get(`${API_URL}/admin/adminuserresume/${requestData.id}`);
+
+  if (response) {
+    return response;
+  } else {
+    return {};
+  }
 }

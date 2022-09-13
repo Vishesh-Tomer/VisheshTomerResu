@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useHistory, Link,useParams } from "react-router-dom";
-import { updateUser } from "../../Service/auth";
+import { updateUser,adminUserAdd } from "../../Service/auth";
 // import { Col } from "react-bootstrap";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 const editUser = () => {
     const history = useHistory();
     const { id } = useParams();
+    console.log(id)
+
+
+    
     const [users, setUsers] = useState({
     email: "",
     name: "",

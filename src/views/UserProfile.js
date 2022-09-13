@@ -34,7 +34,6 @@ function User() {
   }, []);
 
 
-
   const resobject = JSON.parse(localStorage.getItem('resObj'))
   const id = resobject.id
   console.log(id)
@@ -43,8 +42,7 @@ function User() {
       //  localStorage.setItem("adminId", { id });
       const response = await getAdmin({ id });
       console.log("getAdmin", response);
-        setAdminInfo(response?.data);
-        
+        setAdminInfo(response?.data);   
     };
     getData();
   }, [id]);

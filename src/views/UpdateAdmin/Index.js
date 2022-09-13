@@ -82,8 +82,6 @@ function Register() {
                     type="text"
                     className="input-login-control mb-4"
                     placeholder="Enter Your Name"
-                 
-                  
                     value={name}
                     onChange={(e) => handleName(e.target.value)}
                   />
@@ -125,10 +123,10 @@ function Register() {
                     <span
                       className="link-forgot cursor-pointer"
                       onClick={() => {
-                        history.push("/login");
+                        history.push("/admin/adminprofile");
                       }}
                     >
-                      Click here to Login
+                      Click here to Back
                     </span>
                   </div>
                 </Col>
