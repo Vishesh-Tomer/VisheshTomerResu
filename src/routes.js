@@ -35,13 +35,6 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/adminusercreating",
-    name: "Admin User Creating",
-    icon: "nc-icon nc-circle-09",
-    component: AdminUserCreating,
-    layout: "/admin"
-  },
-  {
     path: "/adminprofile",
     name: "Admin Profile",
     icon: "nc-icon nc-circle-09",
@@ -49,47 +42,55 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
+    path: "/adminusercreating",
+    name: "Manage Resume",
+    icon: "nc-icon nc-circle-09",
+    component: AdminUserCreating,
+    layout: "/admin"
+  },
+  
+  {
     path: "/manageuser",
     name: "Manage User",
     icon: "nc-icon nc-circle-09",
     component: ManageUser,
     layout: "/admin"
   },
-  {
-    path: "/table",
-    name: "Table List",
-    icon: "nc-icon nc-notes",
-    component: TableList,
-    layout: "/admin"
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-paper-2",
-    component: Typography,
-    layout: "/admin"
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-atom",
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/admin"
-  }
+  // {
+  //   path: "/table",
+  //   name: "Table List",
+  //   icon: "nc-icon nc-notes",
+  //   component: TableList,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   icon: "nc-icon nc-paper-2",
+  //   component: Typography,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "nc-icon nc-atom",
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "nc-icon nc-pin-3",
+  //   component: Maps,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "nc-icon nc-bell-55",
+  //   component: Notifications,
+  //   layout: "/admin"
+  // }
 ];
 
 export default dashboardRoutes;

@@ -358,7 +358,7 @@ function User() {
           <Col md="8">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Admin User Creating</Card.Title>
+                <Card.Title as="h4">Manage Resume</Card.Title>
               </Card.Header>
               <Card.Body>
                 <Form onSubmit={resume}>
