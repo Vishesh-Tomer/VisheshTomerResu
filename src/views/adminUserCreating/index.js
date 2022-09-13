@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  FaPlusCircle,
+  FaTimes,
+} from "react-icons/fa";
 import { adminResume } from "Service/auth";
 
 // react-bootstrap components
@@ -15,27 +19,28 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import MenuDivider from "antd/lib/menu/MenuDivider";
 
 function User() {
   const history = useHistory();
+  const [job_title, setJob_Title] = useState("");
+  const [image, setImage] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(""); 
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [permAddress, setPermAddress] = useState("");
+  const [cpAddress, setCpAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [drivingLicense, setDrivingLicense] = useState("");
+  const [placeOfbirth, setPlaceOfbirth] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [dateOfbirth, setDateOfbirth] = useState("");
 
-  const [values, setValues] = useState({
-    job_title: "",
-    image: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    country: "",
-    city: "",
-    permAddress: "",
-    cpAddress: "",
-    postalCode: "",
-    drivingLicense: "",
-    nationality: "",
-    placeOfbirth: "",
-    dateOfbirth: "",
-    employmentHistory: "",
+  const [employmentHistory, setemploymentHistory] = useState([
+    {
     jobTitle: "",
     employer: "",
     startDate: "",
@@ -43,47 +48,303 @@ function User() {
     isPresent: "",
     city: "",
     description: "",
+    },
+  ]);
+  const [education, setEducation] = useState([
+    {
     schoolName: "",
     degreeName: "",
     startDate: "",
     enddate: "",
     isPresent: "",
     description: "",
+    },
+  ]);
+  const [socialLink, setSocialLink] = useState([
+    {
     label: "",
     link: "",
-    skill: "",
-    level: "",
-    course: "",
-    institution: "",
-    jobTitle: "",
-    employer: "",
-    startDate: "",
-    endDate: "",
-    isPresent: "",
-    city: "",
-    description: "",
+    },
+  ]);
+  const [skills, setSkills] = useState([
+    {
+      skill: "",
+      level: "",
+    },
+  ]);
+  const [courses, setCourses] = useState([
+    {
+      course: "",
+      institution: "",
+      jobTitle: "",
+      employer: "",
+      startDate: "",
+      endDate: "",
+      isPresent: "",
+      city: "",
+      description : "",
+    },
+  ]);
+  const [internship, setInternship] = useState([
+    {
+      jobTitle: "",
+      employer: "",
+      startDate: "",
+      endDate: "",
+      isPresent: "",
+      city: "",
+      description : "",
+    },
+  ]);
+  const [extraCurricularActivities, setExtraCurricularActivities] = useState([
+    {
     schoolName: "",
     degreeName: "",
     startDate: "",
     enddate: "",
-  });
+    isPresent: "",
+    description: "",
+    },
+  ]);
+  const [hobbies, setHobbies] = useState([]);
+  const [languages, setLanguages] = useState([
+    {
+      language: "",
+    level: "",
+    },
+  ]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
+  const [references, setReferences] = useState([
+    {
+      refrentFullname: "",
+      company: "",
+      phone: "",
+      email: "",
+    },
+  ]);
+
+
+  const handleJob_Title = (value) => {
+    setJob_Title(value);
   };
+  const handleImage = (value) => {
+    setImage(value);
+  };
+  const handleLastName = (value) => {
+    setLastName(value);
+  };
+  const handleemail = (value) => {
+    setEmail(value);
+
+  };
+  const handleName = (value) => {
+    setFirstName(value);
+  };
+  const handleMobileChange = (value) => {
+    setPhone(value);
+  };
+  const handleCountry = (value) => {
+    setCountry(value);
+
+  };
+  const handleCity = (value) => {
+    setCity(value);
+  };
+  const handlePermAddress = (value) => {
+    setPermAddress(value);
+  };
+  const handleCpAddress = (value) => {
+    setCpAddress(value);
+  };
+  const handlPostalCode = (value) => {
+    setPostalCode(value);
+
+  };
+  const handleDrivingLicense = (value) => {
+    setDrivingLicense(value);
+  };
+  const handlePlaceOfbirth = (value) => {
+    setPlaceOfbirth(value);
+  };
+  const handleNationality = (value) => {
+    setNationality(value);
+  };
+  const handleDateOfbirth = (value) => {
+    setDateOfbirth(value);
+  };
+  const handleHobbies = (value) => {
+    setHobbies(value);
+  };
+
+  const handleEmployChange = async (i, e) => {
+    const value = [...employmentHistory];
+    value[i][e.target.name] = e.target.value;
+    setemploymentHistory(value);
+  };
+
+  const handleEducation = async (i, e) => {
+    const value = [...education];
+    value[i][e.target.name] = e.target.value;
+    setEducation(value);
+  };
+
+  const handleSocialLink = async (i, e) => {
+    const value = [...socialLink];
+    value[i][e.target.name] = e.target.value;
+    setSocialLink(value);
+  };
+
+  const handleSkills = async (i, e) => {
+    const value = [...skills];
+    value[i][e.target.name] = e.target.value;
+    setSkills(value);
+  };
+
+  const handleCourses = async (i, e) => {
+    const value = [...courses];
+    value[i][e.target.name] = e.target.value;
+    setCourses(value);
+  };
+
+  const handleInternship = async (i, e) => {
+    const value = [...internship];
+    value[i][e.target.name] = e.target.value;
+    setInternship(value);
+  };
+
+  const handleExtraCurricularActivities = async (i, e) => {
+    const value = [...extraCurricularActivities];
+    value[i][e.target.name] = e.target.value;
+    setExtraCurricularActivities(value);
+  };
+
+  const handleLanguages = async (i, e) => {
+    const value = [...languages];
+    value[i][e.target.name] = e.target.value;
+    setLanguages(value);
+  };
+
+  const handleReferences = async (i, e) => {
+    const value = [...references];
+    value[i][e.target.name] = e.target.value;
+    setReferences(value);
+  };
+
+  const handleAddEmployerFields = async () => {
+    setemploymentHistory([
+      ...employmentHistory,
+      { jobTitle: "",employer: "",startDate: "",endDate: "",isPresent: "",city: "",description: "", },
+    ]);
+  };
+  const removeEmployeRow = async (i) => {
+    if (employmentHistory.length > 1) {
+      employmentHistory.splice(i, 1);
+      setemploymentHistory([...employmentHistory]);
+    }
+  };
+
+
+  const handleEducationFields = async () => {
+    setEducation([
+      ...education,
+      { schoolName: "",degreeName: "",startDate: "",enddate: "",isPresent: "",description: "", },
+    ]);
+  };
+  const removeEducationeRow = async (i) => {
+    if (education.length > 1) {
+      education.splice(i, 1);
+      setEducation([...education]);
+    }
+  };
+
+
+  const handlesocialLinkFields = async () => {
+    setSocialLink([
+      ...socialLink,
+      { label: "",link: "", },
+    ]);
+  };
+
+  const handleSkillsFields = async () => {
+    setSkills([
+      ...skills,
+      { skill: "",level: "", },
+    ]);
+  };
+
+  const handlecoursesFields = async () => {
+    setCourses([
+      ...courses,
+      { course: "",institution: "",jobTitle: "",employer: "",startDate: "",endDate: "",isPresent: "", city: "",description : "", },
+    ]);
+  };
+
+  const handleinternshipFields = async () => {
+    setInternship([
+      ...internship,
+      { jobTitle: "",employer: "",startDate: "",endDate: "",isPresent: "",city: "",description : "", },
+    ]);
+  };
+
+  const handleextraCurricularActivitiesFields = async () => {
+    setExtraCurricularActivities([
+      ...extraCurricularActivities,
+      { schoolName: "",degreeName: "",startDate: "",enddate: "",isPresent: "",description: "", },
+    ]);
+  };
+
+  const handlelanguagesFields = async () => {
+    setLanguages([
+      ...languages,
+      { language: "",level: "", },
+    ]);
+  };
+
+  const handlereferencesFields = async () => {
+    setReferences([
+      ...references,
+      { refrentFullname: "",company: "",phone: "",email: "", },
+    ]);
+  };
+
+  
+  
+  
   const resume = async (e) => {
     e.preventDefault();
-    const response = await adminResume(values);
+
+    const dat = {
+      job_title: job_title,
+      image: image,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      country: country,
+      city: city,
+      permAddress: permAddress,
+      cpAddress: cpAddress,
+      postalCode: postalCode,
+      drivingLicense: drivingLicense,
+      nationality: nationality,
+      placeOfbirth: placeOfbirth,
+      dateOfbirth: dateOfbirth,
+      employmentHistory: employmentHistory,
+      education: education,
+      socialLink: socialLink,
+      skills: skills,
+      courses: courses,
+      internship: internship, 
+      extraCurricularActivities: extraCurricularActivities,
+      languages: languages,
+      references: references,  
+      }
+        
+        
+    const response = await adminResume(dat);
     console.log(response, "respoonse");
-    if (response?.data.admin) {
-      history.push("/dashboard");
-      localStorage.setItem("token", response?.data?.data?.token);
-      localStorage.setItem("resObj", JSON.stringify(response?.data?.user_info));
-      history.push("/dashboard");
+    if (response?.data?.code === 200) {
+      localStorage.setItem("resObje1", JSON.stringify(response?.data?.data));
       toast.success(response?.data?.message);
     } else {
       toast.error(response?.data?.message);
@@ -104,12 +365,12 @@ function User() {
                   <Row>
                     <Col className="pr-1" md="5">
                       <Form.Group>
-                        <h6 class="text-uppercase">JOb Title</h6>
+                        <h6 className="text-uppercase">JOb Title</h6>
                         <Form.Control
                           placeholder="job_title"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={job_title}
+                          onChange={(e) => handleJob_Title(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -119,8 +380,8 @@ function User() {
                         <Form.Control
                           placeholder="image"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={image}
+                          onChange={(e) =>  handleImage(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -130,10 +391,10 @@ function User() {
                       <Form.Group>
                         <h6>First Name</h6>
                         <Form.Control
-                          placeholder="Company"
+                          placeholder="Enter your first name"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={firstName}
+                          onChange={(e) =>  handleName(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -141,10 +402,10 @@ function User() {
                       <Form.Group>
                         <h6>Last Name</h6>
                         <Form.Control
-                          placeholder="Last Name"
+                          placeholder="Enter yourLast Name"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={lastName}
+                          onChange={(e) =>  handleLastName(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -156,8 +417,8 @@ function User() {
                         <Form.Control
                           placeholder="email"
                           type="email"
-                          name="name"
-                          onChange={handleChange}
+                          value={email}
+                          onChange={(e) =>  handleemail(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -169,8 +430,8 @@ function User() {
                         <Form.Control
                           placeholder="Mobile"
                           type="number"
-                          name="name"
-                          onChange={handleChange}
+                          value={phone}
+                          onChange={(e) =>  handleMobileChange(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -180,8 +441,8 @@ function User() {
                         <Form.Control
                           placeholder="Country"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={country}
+                          onChange={(e) =>  handleCountry(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -191,8 +452,8 @@ function User() {
                         <Form.Control
                           placeholder="city"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={city}
+                          onChange={(e) =>  handleCity(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -204,8 +465,8 @@ function User() {
                         <Form.Control
                           placeholder="Home Address"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={permAddress}
+                          onChange={(e) =>  handlePermAddress(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -217,8 +478,8 @@ function User() {
                         <Form.Control
                           placeholder="Home Address"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={cpAddress}
+                          onChange={(e) =>  handleCpAddress(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -230,8 +491,8 @@ function User() {
                         <Form.Control
                           placeholder="Postal Code"
                           type="number"
-                          name="name"
-                          onChange={handleChange}
+                          value={postalCode}
+                          onChange={(e) =>  handlPostalCode(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -241,8 +502,8 @@ function User() {
                         <Form.Control
                           placeholder="Driving License"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={drivingLicense}
+                          onChange={(e) =>  handleDrivingLicense(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -252,43 +513,82 @@ function User() {
                         <Form.Control
                           placeholder="nationality"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={nationality}
+                          onChange={(e) =>  handleNationality(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12">
+                    <Col md="6">
                       <Form.Group>
                         <h6>Place Of birth</h6>
                         <Form.Control
                           placeholder="place Of birth"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          value={placeOfbirth}
+                          onChange={(e) =>  handlePlaceOfbirth(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col md="6">
+                      <Form.Group>
+                        <h6>Date Of birth</h6>
+                        <Form.Control
+                          placeholder="place Of birth"
+                          type="date"
+                          value={dateOfbirth}
+                          onChange={(e) =>  handleDateOfbirth(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+
+
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5>Employment History</h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handleAddEmployerFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {employmentHistory.map((identificationField, i) => {
+                        return(
+                          <>
+                          <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEmployeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
                   <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">
-                          Employment History
-                        </h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
+
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>Job Title</h6>
                         <Form.Control
                           placeholder="jobTitle"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="jobTitle"
+                          value={identificationField.jobTitle}
+                          onChange={(e) => handleEmployChange(i, e)}
+                                         
+                      
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -298,8 +598,9 @@ function User() {
                         <Form.Control
                           placeholder="employer"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="employer"
+                          value={identificationField.employer}
+                          onChange={(e) => handleEmployChange(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -309,8 +610,9 @@ function User() {
                         <Form.Control
                           placeholder="start Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="startDate"
+                          value={identificationField.startDate}
+                          onChange={(e) => handleEmployChange(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -322,8 +624,9 @@ function User() {
                         <Form.Control
                           placeholder="End Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="endDate"
+                          value={identificationField.endDate}
+                          onChange={(e) => handleEmployChange(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -333,8 +636,9 @@ function User() {
                         <Form.Control
                           placeholder="Is Present"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="isPresent"
+                          value={identificationField.isPresent}
+                          onChange={(e) => handleEmployChange(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -344,8 +648,9 @@ function User() {
                         <Form.Control
                           placeholder="City"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="city"
+                          value={identificationField.city}
+                          onChange={(e) => handleEmployChange(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -357,31 +662,60 @@ function User() {
                         <Form.Control
                           placeholder="Description"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="description"
+                          value={identificationField.description}
+                          onChange={(e) => handleEmployChange(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">
-                          Education History
-                        </h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5>Education History</h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handleEducationFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {education.map((educationField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>School Name</h6>
                         <Form.Control
                           placeholder="School Name"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="schoolName"
+                          value={educationField.schoolName}
+                          onChange={(e) => handleEducation(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -391,8 +725,9 @@ function User() {
                         <Form.Control
                           placeholder="Degree Name"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="degreeName"
+                          value={educationField.degreeName}
+                          onChange={(e) => handleEducation(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -402,8 +737,9 @@ function User() {
                         <Form.Control
                           placeholder="start Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="startDate"
+                          value={educationField.startDate}
+                          onChange={(e) => handleEducation(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -415,8 +751,9 @@ function User() {
                         <Form.Control
                           placeholder="End Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="enddate"
+                          value={educationField.enddate}
+                          onChange={(e) => handleEducation(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -426,8 +763,9 @@ function User() {
                         <Form.Control
                           placeholder="Is Present"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="isPresent"
+                          value={educationField.isPresent}
+                          onChange={(e) => handleEducation(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -439,31 +777,60 @@ function User() {
                         <Form.Control
                           placeholder="Description"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="description"
+                          value={educationField.description}
+                          onChange={(e) => handleEducation(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">
-                          Social Link
-                        </h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5> Social Link </h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handlesocialLinkFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {socialLink.map((socialLinkField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>Label</h6>
                         <Form.Control
                           placeholder="Gmail"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="label"
+                          value={socialLinkField.label}
+                          onChange={(e) => handleSocialLink(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -473,29 +840,61 @@ function User() {
                         <Form.Control
                           placeholder="LinkedIn profile"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="link"
+                          value={socialLinkField.link}
+                          onChange={(e) => handleSocialLink(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
 
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">Skills</h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5> Skills </h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handleSkillsFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {skills.map((skillsField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>Skill Name</h6>
                         <Form.Control
                           placeholder="Skill Name"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="skill"
+                          value={skillsField.skill}
+                          onChange={(e) => handleSkills(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -505,29 +904,60 @@ function User() {
                         <Form.Control
                           placeholder="level in numbers"
                           type="number"
-                          name="name"
-                          onChange={handleChange}
+                          name="level"
+                          value={skillsField.level}
+                          onChange={(e) => handleSkills(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">Courses</h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5> Courses </h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handlecoursesFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {courses.map((coursesField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>Course Name</h6>
                         <Form.Control
                           placeholder="Course Name"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="course"
+                          value={coursesField.course}
+                          onChange={(e) => handleCourses(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -537,8 +967,9 @@ function User() {
                         <Form.Control
                           placeholder="Institution"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="institution"
+                          value={coursesField.institution}
+                          onChange={(e) => handleCourses(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -548,8 +979,9 @@ function User() {
                         <Form.Control
                           placeholder="start Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="startDate"
+                          value={coursesField.startDate}
+                          onChange={(e) => handleCourses(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -561,8 +993,9 @@ function User() {
                         <Form.Control
                           placeholder="End Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="endDate"
+                          value={coursesField.endDate}
+                          onChange={(e) => handleCourses(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -572,8 +1005,9 @@ function User() {
                         <Form.Control
                           placeholder="Is Present"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="isPresent"
+                          value={coursesField.isPresent}
+                          onChange={(e) => handleCourses(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -585,31 +1019,61 @@ function User() {
                         <Form.Control
                           placeholder="Description"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="description"
+                          value={coursesField.description}
+                          onChange={(e) => handleCourses(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-                  <Row>
-                    <Col md="12">
+
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5>  Internship </h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handleinternshipFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {internship.map((internshipField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
+                      <Col className="pr-1" md="4">
                       <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">
-                          Extra Curricular Activities
-                        </h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="4">
-                      <Form.Group>
-                        <h6>Function Title</h6>
+                        <h6>Job Title</h6>
                         <Form.Control
-                          placeholder="function Title"
+                          placeholder="jobTitle"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="jobTitle"
+                          value={internshipField.jobTitle}
+                          onChange={(e) => handleInternship(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -619,8 +1083,9 @@ function User() {
                         <Form.Control
                           placeholder="Employer"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="employer"
+                          value={internshipField.employer}
+                          onChange={(e) => handleInternship(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -630,8 +1095,137 @@ function User() {
                         <Form.Control
                           placeholder="start Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="startDate"
+                          value={internshipField.startDate}
+                          onChange={(e) => handleInternship(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    </Row>
+                  <Row>
+                    <Col className="pr-1" md="4">
+                      <Form.Group>
+                        <h6>End Date</h6>
+                        <Form.Control
+                          placeholder="End Date"
+                          type="date"
+                          name="endDate"
+                          value={internshipField.endDate}
+                          onChange={(e) => handleInternship(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="px-1" md="4">
+                      <Form.Group>
+                        <h6>Is Present</h6>
+                        <Form.Control
+                          placeholder="Is Present"
+                          type="text"
+                          name="isPresent"
+                          value={internshipField.isPresent}
+                          onChange={(e) => handleInternship(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="4">
+                      <Form.Group>
+                        <h6>city</h6>
+                        <Form.Control
+                          placeholder="City Name"
+                          type="text"
+                          name="city"
+                          value={internshipField.city}
+                          onChange={(e) => handleInternship(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pr-1" md="4">
+                      <Form.Group>
+                        <h6>Description</h6>
+                        <Form.Control
+                          placeholder="Description"
+                          type="text"
+                          name="description"
+                          value={internshipField.description}
+                          onChange={(e) => handleInternship(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
+           
+               
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5> Extra Curricular Activities </h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handleextraCurricularActivitiesFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {extraCurricularActivities.map((extraCurricularActivitiesField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
+                    <Col className="pr-1" md="4">
+                      <Form.Group>
+                        <h6>Function Title</h6>
+                        <Form.Control
+                          placeholder="function Title"
+                          type="text"
+                          name="functionTitle"
+                          value={extraCurricularActivitiesField.functionTitle}
+                          onChange={(e) => handleExtraCurricularActivities(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="px-1" md="4">
+                      <Form.Group>
+                        <h6>Employer</h6>
+                        <Form.Control
+                          placeholder="Employer"
+                          type="text"
+                          name="employer"
+                          value={extraCurricularActivitiesField.employer}
+                          onChange={(e) => handleExtraCurricularActivities(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pl-1" md="4">
+                      <Form.Group>
+                        <h6>Start Date</h6>
+                        <Form.Control
+                          placeholder="start Date"
+                          type="date"
+                          name="startDate"
+                          value={extraCurricularActivitiesField.startDate}
+                          onChange={(e) => handleExtraCurricularActivities(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -643,8 +1237,9 @@ function User() {
                         <Form.Control
                           placeholder="End Date"
                           type="date"
-                          name="name"
-                          onChange={handleChange}
+                          name="endDate"
+                          value={extraCurricularActivitiesField.endDate}
+                          onChange={(e) => handleExtraCurricularActivities(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -654,56 +1249,103 @@ function User() {
                         <Form.Control
                           placeholder="Is Present"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="isPresent"
+                          value={extraCurricularActivitiesField.isPresent}
+                          onChange={(e) => handleExtraCurricularActivities(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
+                    <Col className="pr-1" md="4">
+                      <Form.Group>
+                        <h6>city</h6>
+                        <Form.Control
+                          placeholder="City Name"
+                          type="text"
+                          name="city"
+                          value={extraCurricularActivitiesField.city}
+                          onChange={(e) => handleExtraCurricularActivities(i, e)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>Description</h6>
                         <Form.Control
                           placeholder="Description"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="description"
+                          value={extraCurricularActivitiesField.description}
+                          onChange={(e) => handleExtraCurricularActivities(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
+              
 
                   <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">Hobbies</h5>
+                        <h5 className="badge badge-primary text-wrap">Hobbies</h5>
                         <Form.Control
                           placeholder="function Title"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="hobbies"
+                          value={hobbies}
+                          onChange={(e) => handleHobbies(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
 
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">Languages</h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
+
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5> Languages </h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handlelanguagesFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {languages.map((languagesField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>Skill Name</h6>
                         <Form.Control
                           placeholder="Skill Name"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="language"
+                          value={languagesField.language}
+                          onChange={(e) => handleLanguages(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -713,31 +1355,61 @@ function User() {
                         <Form.Control
                           placeholder="level in numbers"
                           type="number"
-                          name="name"
-                          onChange={handleChange}
+                          name="level"
+                          value={languagesField.level}
+                          onChange={(e) => handleLanguages(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <h5 class="badge badge-primary text-wrap">
-                          References
-                        </h5>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
+                 
+                  <div className="identityBox borderT">
+                    <div className="identificationDocument">
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="identityTitle mt-0 mt-md-3 mb-md-2">
+                            <h5> References </h5>
+                            <div className="editDetail">
+                              <a
+                                className="btn addBtn"
+                                type="button"
+                                onClick={handlereferencesFields}
+                              >
+                                <span>
+                                  <FaPlusCircle />
+                                </span>
+                                Add
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {references.map((referencesField, i) => {
+                        return(
+                          <>
+                  <div className="text-center">
+                  <span
+                      className="closeBtn"
+                      onClick={(e) =>removeEducationeRow(i)}>
+                      <FaTimes />
+                      </span>
+                      </div>
+                      <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <h6>Refrent Fullname</h6>
                         <Form.Control
                           placeholder="Refrent Fullname"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="refrentFullname"
+                          value={referencesField.refrentFullname}
+                          onChange={(e) => handleReferences(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -747,8 +1419,9 @@ function User() {
                         <Form.Control
                           placeholder="company"
                           type="text"
-                          name="name"
-                          onChange={handleChange}
+                          name="company"
+                          value={referencesField.company}
+                          onChange={(e) => handleReferences(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -758,8 +1431,9 @@ function User() {
                         <Form.Control
                           placeholder="phone"
                           type="number"
-                          name="name"
-                          onChange={handleChange}
+                          name="phone"
+                          value={referencesField.phone}
+                          onChange={(e) => handleReferences(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -771,12 +1445,22 @@ function User() {
                         <Form.Control
                           placeholder="Email"
                           type="email"
-                          name="name"
-                          onChange={handleChange}
+                          name="email"
+                          value={referencesField.email}
+                          onChange={(e) => handleReferences(i, e)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
+
+                 
+                  
 
                   <Button
                     className="btn-fill pull-right"
@@ -794,6 +1478,7 @@ function User() {
       </Container>
     </>
   );
+  
 }
 
 export default User;

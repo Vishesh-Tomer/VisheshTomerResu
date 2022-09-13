@@ -18,11 +18,29 @@ import {
 function User() {
   const history = useHistory();
   const [adminInfo, setAdminInfo] = useState({});
+
+
+
+  const token = localStorage.getItem("token")
+
+  useEffect(() => {
+    if (!token) {
+      toast.warning(
+        "your session has been expired ...kindly login again.",
+        "yellow"
+      );
+      history.push(`/login`);
+    }
+  }, []);
+
+
+
   const resobject = JSON.parse(localStorage.getItem('resObj'))
   const id = resobject.id
   console.log(id)
   useEffect(() => {
     const getData = async () => {
+      //  localStorage.setItem("adminId", { id });
       const response = await getAdmin({ id });
       console.log("getAdmin", response);
         setAdminInfo(response?.data);
@@ -31,6 +49,10 @@ function User() {
     getData();
   }, [id]);
   console.log("setAdminInfo",adminInfo);
+
+  
+
+   
 
 
   return (

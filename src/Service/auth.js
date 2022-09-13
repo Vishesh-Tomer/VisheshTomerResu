@@ -3,10 +3,14 @@ import { API_URL } from "./url";
 var basicToken = "Basic YW5pbDphbmlsQDEyMw==" 
 var bearerToken = `bearer ${localStorage.getItem('token')}`
 var getAdmi = `bearer ${localStorage.getItem('token')}`
-var resumeToken = `bearer ${localStorage.getItem('token')}`
-var updateAdmi =  `bearer ${localStorage.getItem('token')}`
+var resumeToken = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxODYwMTEsImV4cCI6MTY2NDc3ODAxMSwidHlwZSI6InJlZnJlc2gifQ.djCuEWN0OFVEN5mP8TgBuiyZN8jSbrJcH7fv70cT114`
+var updateAdmi =  `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxODYwMTEsImV4cCI6MTY2NDc3ODAxMSwidHlwZSI6InJlZnJlc2gifQ.djCuEWN0OFVEN5mP8TgBuiyZN8jSbrJcH7fv70cT114`
 var UserAddAdmin = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxOTQzNDgsImV4cCI6MTY2NDc4NjM0OCwidHlwZSI6InJlZnJlc2gifQ.F74wz5E_UmpW3vPxufGoBinBsB6OQbV9TsNYUIKHvpE`
 var UserCreateAdmin = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxOTQzNDgsImV4cCI6MTY2NDc4NjM0OCwidHlwZSI6InJlZnJlc2gifQ.F74wz5E_UmpW3vPxufGoBinBsB6OQbV9TsNYUIKHvpE`
+var DeleteUser = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxODYwMTEsImV4cCI6MTY2NDc3ODAxMSwidHlwZSI6InJlZnJlc2gifQ.djCuEWN0OFVEN5mP8TgBuiyZN8jSbrJcH7fv70cT114`
+var updateuser = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzBmMThkMTEwYmUwMjUxZDE5Y2QyMTQiLCJpYXQiOjE2NjIxODYwMTEsImV4cCI6MTY2NDc3ODAxMSwidHlwZSI6InJlZnJlc2gifQ.djCuEWN0OFVEN5mP8TgBuiyZN8jSbrJcH7fv70cT114`
+
+
 
 export async function LOGIN(requestData) {
     axios.defaults.headers.common["Authorization"] = basicToken;
@@ -92,10 +96,10 @@ export async function LOGIN(requestData) {
   }
 
 
-  export async function updateAdmin(requestData) {
+  export async function updateAdmin(id, requestData) {
     axios.defaults.headers.common["Authorization"] = updateAdmi
 
-    var response = await axios.patch(`${API_URL}/admin`, requestData);
+    var response = await axios.patch(`${API_URL}/admin/${id}`, requestData);
 
     if (response) {
       return response;
@@ -129,4 +133,31 @@ export async function adminUserCreate(requestData) {
   } else {
     return [];
   }
+}
+
+
+export async function deleteUser() { 
+
+    axios.defaults.headers.common["Authorization"] = DeleteUser;
+
+    var response = await axios.delete(`${API_URL}/admin/deactivate-user`);
+
+    if (response) {
+      return response;
+    } else {
+      return {};
+    }
+
+  }
+
+  export async function updateUser(id, requestData) {
+    axios.defaults.headers.common["Authorization"] = updateuser
+
+    var response = await axios.patch(`${API_URL}/admin/user/${id}`, requestData);
+
+    if (response) {
+      return response;
+    } else {
+      return {};
+    }
 }

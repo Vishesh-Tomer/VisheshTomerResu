@@ -1,9 +1,125 @@
-import React from 'react'
-import { useHistory, Link } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import React, { useState,useEffect } from "react";
+import { useHistory, Link,useParams } from "react-router-dom";
+import { updateUser } from "../../Service/auth";
+// import { Col } from "react-bootstrap";
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const editUser = () => {
     const history = useHistory();
+    const { id } = useParams();
+    const [users, setUsers] = useState({
+    email: "",
+    name: "",
+    role: "",
+    password: "",
+    phone: "",
+    dob: "",
+    gender: "",
+    address: "",
+    zipcode: "",
+    });
+    useEffect(() => {
+      const getData = async () => {
+        const response = await adminUserAdd();
+        console.log("getAdmin", response);
+        setUsers(response?.data?.results);
+          
+      };
+      getData();
+    }, []);
+    console.log("setAdminInfo",users);
+
+
+
+
+
+
+
+  const [name, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("")
+  const [phone, setPhone] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  
+
+  // const token = localStorage.getItem("token")
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     toast.warning(
+  //       "your session has been expired ...kindly login again.",
+  //       "yellow"
+  //     );
+  //     history.push(`/login`);
+  //   }
+  // }, []);
+
+  const handleName = (value) => {
+    setFirstName(value);
+  };
+
+  const handleEmailChange = (value) => {
+    setEmail(value);
+  };
+
+  const handleMobileChange = (value) => {
+    setPhone(value);
+  };
+
+  const handleRoleChange = (value) => {
+    setRole(value);
+
+  };
+
+  const handledobChange = (value) => {
+    setDob(value);
+
+  };
+  const handleGenderChange = (value) => {
+    setGender(value);
+
+  };
+  const handleAddressChange = (value) => {
+    setAddress(value);
+
+  };
+  const handleZipCodeChange = (value) => {
+    setZipcode(value);
+
+  };
+
+
+  const handleUpdateUser = async (event) => {
+    event.preventDefault();
+
+    
+    const data = {
+    email: email,
+    name: name,
+    role: role,
+    phone: phone,
+    dob: dob,
+    gender: gender,
+    address: address,
+    zipcode: zipcode,
+      }
+      const response = await updateUser(id , data)
+        console.log("data",response);
+        if (response?.code === 200) {
+          localStorage.setItem('resObject', JSON.stringify(response?.data?.data))
+          history.push(`/admin/manageuser`);
+          toast.success("Updated Successfully"); 
+        } else {
+          toast.error("Something went wrong!");
+        }
+      };
+
+
+
   return (
     <div className="container">
       <div className="w-75 mx-auto shadow p-5">
@@ -15,8 +131,8 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your Email"
               name="email"
-            //   value={name}
-            //   onChange={e => onInputChange(e)}
+            value={email}
+            onChange={(e) => handleEmailChange(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -25,8 +141,8 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your Name"
               name="name"
-            //   value={name}
-            //   onChange={e => onInputChange(e)}
+              value={name}
+            onChange={(e) => handleName(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -35,8 +151,8 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your role"
               name="role"
-            //   value={username}
-            //   onChange={e => onInputChange(e)}
+              value={role}
+            onChange={(e) => handleRoleChange(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -45,18 +161,18 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your phone number"
               name="phone"
-            //   value={email}
-            //   onChange={e => onInputChange(e)}
+              value={phone}
+            onChange={(e) => handleMobileChange(e.target.value)}
             />
           </div>
           <div className="form-group">
             <input
               type="date"
               className="form-control form-control-lg"
-              placeholder="Enter Your Date of birth"
+              placeholder="Enter Your gender"
               name="dob"
-            //   value={phone}
-            //   onChange={e => onInputChange(e)}
+              value={dob}
+            onChange={(e) => handledobChange(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -65,8 +181,8 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your gender"
               name="gender"
-            //   value={website}
-            //   onChange={e => onInputChange(e)}
+              value={gender}
+            onChange={(e) => handleGenderChange(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -75,8 +191,8 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your Address"
               name="address"
-            //   value={website}
-            //   onChange={e => onInputChange(e)}
+              value={address}
+            onChange={(e) => handleAddressChange(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -85,19 +201,22 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your ZipCode"
               name="zipcode"
-            //   value={website}
-            //   onChange={e => onInputChange(e)}
+              value={zipcode}
+            onChange={(e) => handleZipCodeChange(e.target.value)}
             />
           </div>
-          <button className="btn btn-warning btn-block">Update User</button>
-          <Link
-                    className="btn btn-outline-primary"
-                    onClick={() => {
-                        history.push("/admin/manageuser");
-                      }}
-                  >
-                    Click here to back
-            </Link>
+          <div xs="12">
+                  <div className="login-login">
+                    <button
+                      type="submit"
+                      className="btn btn-login cursor-pointer"
+                      onClick={(e) => handleUpdateUser(e)}
+                    >
+                      Update Now
+                    </button>
+                    <ToastContainer />
+                  </div>
+                </div>
         </form>
       </div>
     </div>

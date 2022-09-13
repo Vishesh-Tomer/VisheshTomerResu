@@ -1,6 +1,5 @@
 import React ,{useEffect}from "react";
 import ChartistGraph from "react-chartist";
-import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 // react-bootstrap components
@@ -22,8 +21,7 @@ import {
 function Dashboard() {
   const history = useHistory();
 
-  const cookie = new Cookies();
-  const token = cookie.get("token");
+  const token = localStorage.getItem("token")
 
   useEffect(() => {
     if (!token) {

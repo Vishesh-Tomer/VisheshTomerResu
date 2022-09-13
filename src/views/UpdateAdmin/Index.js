@@ -5,86 +5,87 @@ import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./style.scss";
-import { updateAdmin, getAdmin } from "../../Service/auth";
+import { updateAdmin } from "../../Service/auth";
 
 
 function Register() {
   const history = useHistory();
-
-  const [adminInfo, setAdminInfo] = useState({});
-
-  const resobject = JSON.parse(localStorage.getItem('resObj'))
-  const id = resobject.id
-  console.log(id)
-  useEffect(() => {
-    const getData = async () => {
-      const respons = await getAdmin({ id });
-      // console.log("getAdmin", response);
-        setAdminInfo(respons?.data);
-        
-    };
-    getData();
-  }, [id]);
-  // console.log("setAdminInfo",adminInfo);
-
-
-
-  const [values, setValues] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    type: "",
-  });
-
-  // const { name, email,  } = data;
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
-  const login = async (e) => {
-    e.preventDefault();
-    
-    const response = await updateAdmin(adminInfo);
-   
-    console.log(response, "respoonse");
-    if (response?.data?.code === 200) {
-      localStorage.setItem("token", response?.data?.data?.tokens.refresh.token);
-      localStorage.setItem(
-        "resObj",
-        JSON.stringify(response?.data)
-      );
-      toast.success(response?.data?.message);
-    } else {
-      toast.error(response?.data?.message);
-    }
-    console.log(response, "respoonse");
-  };
-
-
-
+  const profileData = JSON.parse(localStorage.getItem('resObj'))
+  console.log("profilr",profileData)
+  const [name, setFirstName] = useState(profileData.name);
+  const [email, setEmail] = useState(profileData.email);
+  const [phone, setPhone] = useState(profileData.phone);
+  const [type, setType] = useState(profileData.type);
   
 
+  const token = localStorage.getItem("token")
 
+  useEffect(() => {
+    if (!token) {
+      toast.warning(
+        "your session has been expired ...kindly login again.",
+        "yellow"
+      );
+      history.push(`/login`);
+    }
+  }, []);
 
-  return (
+  const handleName = (value) => {
+    setFirstName(value);
+  };
+
+  const handleEmailChange = (value) => {
+    setEmail(value);
+  };
+
+  const handleMobileChange = (value) => {
+    setPhone(value);
+  };
+
+  const handleTypeChange = (value) => {
+    setType(value);
+
+  };
+
+  const handleUpdateProfile = async (event) => {
+    event.preventDefault();
+
+   
+      const data = {
+        name: name,
+        email: email,
+        phone: phone,
+        type: type
+      }
+      const response = await updateAdmin(profileData.id , data)
+        console.log("data",response);
+        if (response.data.code === 200) {
+          localStorage.setItem('resObj', JSON.stringify(response?.data?.data))
+          toast.success("Updated Successfully");
+          history.push(`/admin/adminprofile`);
+          
+        } else {
+          toast.error("Something went wrong!");
+        }
+    
+  };
+
+   return (
     <>
       <div className="main-wrapper-login">
         <div className="Login-wrapper">
           <div className="loginbody--form">
-            <Form onSubmit={login}>
+            <Form>
               <Row>
               <Col xs="12">
                   <Form.Control
                     type="text"
                     className="input-login-control mb-4"
                     placeholder="Enter Your Name"
-                    name="name"
-                    value={adminInfo.name}
-                    onChange={handleChange}
+                 
+                  
+                    value={name}
+                    onChange={(e) => handleName(e.target.value)}
                   />
                 </Col>
                 <Col xs="12">
@@ -92,9 +93,9 @@ function Register() {
                     type="email"
                     className="input-login-control mb-4"
                     placeholder="Email"
-                    name="email"
-                    value={adminInfo.email}
-                    onChange={handleChange}
+                
+                    onChange={(e) => handleEmailChange(e.target.value)}
+                    value={email}
                   />
                 </Col>
                 <Col xs="12">
@@ -102,9 +103,9 @@ function Register() {
                     type="number"
                     className="input-login-control mb-4"
                     placeholder="Phone Number"
-                    name="phone"
-                    value={adminInfo.phone}
-                    onChange={handleChange}
+          
+                    onChange={(e) => handleMobileChange(e.target.value)}
+                    value={phone}
                   />
                 </Col>
                 <Col xs="12">
@@ -112,9 +113,9 @@ function Register() {
                     type="text"
                     className="input-login-control mb-4"
                     placeholder="Admin type"
-                    name="type"
-                    value={adminInfo.type}
-                    onChange={handleChange}
+          
+                    value={type}
+                    onChange={(e) => handleTypeChange(e.target.value)}
                   />
                 </Col>
                 
@@ -136,8 +137,9 @@ function Register() {
                     <button
                       type="submit"
                       className="btn btn-login cursor-pointer"
+                      onClick={(e) => handleUpdateProfile(e)}
                     >
-                      Update\ Now
+                      Update Now
                     </button>
                     <ToastContainer />
                   </div>

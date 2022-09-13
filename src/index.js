@@ -52,7 +52,7 @@ root.render(
       <Route path="/register">
         <Register/>
       </Route>
-      <Route path="/edituser">
+      <Route path="/edituser/:id">
         <EditUser/>
       </Route>
       <Route path="/changepassword">

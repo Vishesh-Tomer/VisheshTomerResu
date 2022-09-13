@@ -1,0 +1,190 @@
+.identityBox {
+    .identificationDocument {
+      border-radius: 10px;
+      .identiBox {
+        padding: 0;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        &:last-child {
+          border: none;
+        }
+  
+        .closeBtn {
+          cursor: pointer !important;
+          margin-left: 5px;
+          line-height: 10px;
+          padding: 5px;
+        }
+        .doc_upload{
+          display: flex;
+          flex-wrap: wrap;
+          li{
+            display: flex;
+            align-items: center;
+            border: 1px solid #d6edf4;
+            border-radius: 10px;
+            padding: 5px;
+            margin: 0 5px 8px 0;
+            .imgBox{
+              width: 85px;
+              height: 70px;
+              border: 1px solid #fff;
+              border-radius: 10px;
+              overflow: hidden;
+              margin-right: 5px;
+              img{
+                height: 100%;
+              }
+            } 
+            .content{
+              text-align: left;
+              h6{
+                font-size: 13px;
+                color: #000;
+              }
+              span{
+                font-size: 13px;
+                color: #868b97;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+        &.securityBox{
+          .form-group{
+            margin: 0 0 8px;
+          }
+        }
+      }
+      .border-1{
+        border: 1px solid #d6edf4;
+        border-radius: 8px;
+        .table{
+          text-align: left;
+          margin: 0;
+          thead{
+            tr{
+              border-width: 0;
+            }
+            th{
+              font-size: 14px;
+              font-weight: 500;
+            }
+          }
+          tbody{
+            border: 1px solid #d6edf4;
+            td{
+              font-size: 15px;
+            }
+          }
+          a{
+            vertical-align: -webkit-baseline-middle;
+            color: #000;
+          }
+          .form-group{
+            margin: 0;
+            .form-control,.form-select{
+              border: none;
+              background: #f7f8fc;
+              border-radius: 5px;
+              padding: 0 10px;
+              margin: 0;
+              font-size: 13px;
+              min-height: 28px;
+            }
+          }
+        }
+      }
+      
+    }
+    &.borderT{
+      margin-top: 10px;
+      border-top: 1px solid #d6edf4;
+    }
+    .identity_docs{
+      display: flex;
+      border: 1px solid #d6edf4;
+      border-radius: 10px;
+      padding: 5px;
+      .imgBox{
+        width: 135px;
+        max-width: 135px;
+        height: 70px;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-right: 5px;
+        img{
+          height: 100%;
+        }
+      } 
+      .content{
+        text-align: left;
+        width: 100%;
+        h6{
+          font-size: 13px;
+          color: #000;
+        }
+        span{
+          font-size: 13px;
+          color: #868b97;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .identityTitle {
+    position: relative;
+    margin-bottom: 15px;
+    h5 {
+      // text-align: left;
+      font-weight: 700;
+      font-size: 18px;
+      color: #000;
+      text-align: center;
+    }
+  }
+
+  .editDetail {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    display: flex;
+    align-items: center;
+    background: #000;
+    border-radius: 5px;
+    a {
+      display: inline-block;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 11px;
+      padding: 5px 8px;
+      span{
+        margin-left: 5px;
+      }
+      i{
+        color: #fff;
+      }
+    }
+  }
+
+  .addBtn {
+    padding-top: 15px;
+    padding-bottom: 0;
+    color: #a0a1a2;
+    font-weight: 600;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .closeBtn {
+    cursor: pointer !important;
+    margin-left: 5px;
+    line-height: 10px;
+    padding: 5px;
+  }

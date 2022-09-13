@@ -1,18 +1,31 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal, Input } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import { adminUserAdd, adminUserCreate } from "Service/auth";
+import { adminUserAdd, adminUserCreate, deleteUser } from "Service/auth";
 import { useHistory } from "react-router-dom";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
 function Home() {
+
+
   const history = useHistory();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const token = localStorage.getItem("token")
+
+  useEffect(() => {
+    if (!token) {
+      toast.warning(
+        "your session has been expired ...kindly login again.",
+        "yellow"
+      );
+      history.push(`/login`);
+    }
+  }, []);
 
   
     const [users, setUsers] = useState([]);
@@ -26,6 +39,9 @@ function Home() {
       getData();
     }, []);
     console.log("setAdminInfo",users);
+
+    
+
 
   const [values, setValues] = useState({
     email: "",
@@ -49,7 +65,7 @@ function Home() {
   const login = async (e) => {
     e.preventDefault();
     const response = await adminUserCreate(values);
-    console.log(response, "respoonse");
+     console.log(response, "respoonse");
     if (response?.data.user?.code === 200) {
       localStorage.setItem("token", response?.data?.data?.tokens?.refresh.token);
       localStorage.setItem(
@@ -63,11 +79,37 @@ function Home() {
   };
 
 
+
+  const deleteListItems = async () => {
+    const response = await deleteUser();
+     console.log("del", response);
+    if (response.code === 200) {
+      getDocumentLists();
+      toast.success(response.message, "green");
+    } else {
+      toast.error(response.message, "red");
+    }
+  };  
+
+
   return (
     <div className="container ">
       <div className="crud shadow-lg p-3 mb-5 mt-5 bg-body rounded">
         <div className="row ">
           <div className="col-sm-3 mt-5 mb-4 text-gred">
+          <div  >Bluck actions:
+          </div>
+        <div >
+          <select
+            // name="pending"
+            // id="pending"
+            // onChange={handleCategoryChange}
+          >
+            <option value="">All</option>
+            <option value="active">active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
             <div className="search">
               {/* <form className="form-inline">
                 <input
@@ -79,7 +121,7 @@ function Home() {
               </form> */}
             </div>
           </div>
-          <div
+         <div
             className="col-sm-3 offset-sm-2 mt-5 mb-4 text-gred"
             style={{ color: "green" }}
           >
@@ -87,6 +129,7 @@ function Home() {
               <b>User Details</b>
             </h2>
           </div>
+          
           <div className="col-sm-3 offset-sm-1  mt-5 mb-4 text-gred">
             <Button variant="primary" onClick={handleShow}>
               Add New User
@@ -126,14 +169,14 @@ function Home() {
                   <Link
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.push("/edituser");
+                        history.push(`/edituser/${user?.id}`)
                       }}
                   >
                     Edit
                   </Link>
                   <Link
                     className="btn btn-danger"
-                    onClick={() => deleteList(user?.id)}
+                    onClick={() => deleteListItems()}
                   >
                     Delete
                   </Link>
@@ -154,7 +197,10 @@ function Home() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Record</Modal.Title>
+              <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+              <span className="pl-2">Add Employee</span>
+            </button> 
             </Modal.Header>
             <Modal.Body>
               <form onSubmit={login}>

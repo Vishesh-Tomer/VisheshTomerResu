@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./style.scss";
 import { Registe } from "../../Service/auth";
 
+
 function Register() {
   const history = useHistory();
 
