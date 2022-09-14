@@ -11,7 +11,7 @@ import { updateAdmin } from "../../Service/auth";
 function Register() {
   const history = useHistory();
   const profileData = JSON.parse(localStorage.getItem('resObj'))
-  console.log("profilr",profileData)
+  console.log("profilr",profileData?.id)
   const [name, setFirstName] = useState(profileData.name);
   const [email, setEmail] = useState(profileData.email);
   const [phone, setPhone] = useState(profileData.phone);

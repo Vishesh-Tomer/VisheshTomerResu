@@ -1,28 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaPlusCircle, FaTimes } from "react-icons/fa";
 import { adminResume } from "Service/auth";
 import Select from "react-select";
-import "./Style.scss";
-import {
-  FaUserAlt,
-  FaBirthdayCake,
-  FaArrowRight,
-  // FaArrowLeft,
-  FaEnvelope,
-  FaPhone,
-  // FaPen,
-  // FaCamera,
-  // FaUserCircle,
-  FaPaperclip,
-  // FaBriefcase,
-  FaPlusCircle,
-  FaEdit,
-  FaTimes,
-  FaCalendar,
-  FaPen,
-  FaCaretDown,
-} from "react-icons/fa";
+
 
 // react-bootstrap components
 import {
@@ -37,27 +19,28 @@ import {
   Col,
 } from "react-bootstrap";
 
-function User() {
+function EditResume() {
   const history = useHistory();
-  const [job_title, setJob_Title] = useState("");
-  const [image, setImage] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [phoneError, setPhoneError] = useState(false);
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [permAddress, setPermAddress] = useState("");
-  const [cpAddress, setCpAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [drivingLicense, setDrivingLicense] = useState("");
-  const [placeOfbirth, setPlaceOfbirth] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [dateOfbirth, setDateOfbirth] = useState("");
-  const [dobError, setdobError] = useState(false);
-  const string = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/;
+
+  const userprofileData = JSON.parse(localStorage.getItem('resObje1'))
+  console.log("profilr",userprofileData)
+
+
+  const [job_title, setJob_Title] = useState(userprofileData.job_title);
+  const [image, setImage] = useState(userprofileData.image);
+  const [firstName, setFirstName] = useState(userprofileData.firstName);
+  const [lastName, setLastName] = useState(userprofileData.lastName);
+  const [email, setEmail] = useState(userprofileData.email);
+  const [phone, setPhone] = useState(userprofileData.job_title);
+  const [country, setCountry] = useState(userprofileData.job_title);
+  const [city, setCity] = useState(userprofileData.job_title);
+  const [permAddress, setPermAddress] = useState(userprofileData.job_title);
+  const [cpAddress, setCpAddress] = useState(userprofileData.job_title);
+  const [postalCode, setPostalCode] = useState(userprofileData.job_title);
+  const [drivingLicense, setDrivingLicense] = useState(userprofileData.job_title);
+  const [placeOfbirth, setPlaceOfbirth] = useState(userprofileData.job_title);
+  const [nationality, setNationality] = useState(userprofileData.job_title);
+  const [dateOfbirth, setDateOfbirth] = useState(userprofileData.job_title);
 
   const [employmentHistory, setemploymentHistory] = useState([
     {
@@ -96,6 +79,7 @@ function User() {
     {
       course: "",
       institution: "",
+      employer: "",
       startDate: "",
       endDate: "",
       isPresent: "",
@@ -116,12 +100,12 @@ function User() {
   const [extraCurricularActivities, setExtraCurricularActivities] = useState([
     {
       functionTitle: "",
-      employer: "",
-      startDate: "",
-      endDate: "",
-      isPresent: "",
-      city: "",
-      description: "",
+        employer: "",
+        startDate: "",
+        endDate: "",
+        isPresent: "",
+        city : "",
+        description: ""
     },
   ]);
 
@@ -162,25 +146,12 @@ function User() {
   };
   const handleemail = (value) => {
     setEmail(value);
-    const regex =
-    /^[A-Za-z0-2._]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
-  if (regex.test(value) === false) {
-    setEmailError(true);
-  } else {
-    setEmailError(false);
-  }
   };
   const handleName = (value) => {
     setFirstName(value);
   };
   const handleMobileChange = (value) => {
     setPhone(value);
-    const regex = /^\d{10}$/;
-    if (regex.test(value) === false) {
-      setPhoneError(true);
-    } else {
-      setPhoneError(false);
-    }
   };
   const handleCountry = (value) => {
     setCountry(value);
@@ -208,31 +179,9 @@ function User() {
   };
   const handleDateOfbirth = (value) => {
     setDateOfbirth(value);
-    var today = new Date();
-    var birthDate = new Date(value);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    if (age >= 18) {
-      setdobError(false);
-    } else {
-      setdobError(true);
-    }
   };
-
   const handleHobbies = (value) => {
-    console.log(value);
-    const fstate = [];
-    while (hobbies?.length > 0) {
-      hobbies.pop();
-    }
-    for (let i = 0; i < value?.length; i++) {
-      hobbies?.push(value[i].value);
-    }
-
-    console.log("filtered", hobbies);
+    setHobbies(value);
   };
 
   const handleEmployChange = async (i, e) => {
@@ -345,6 +294,7 @@ function User() {
     setSkills([...skills, { skill: "", level: "" }]);
   };
 
+
   const removeskillsRow = async (i) => {
     if (skills.length > 1) {
       skills.splice(i, 1);
@@ -356,18 +306,11 @@ function User() {
     setCourses([
       ...courses,
       {
-        course: "",
-        institution: "",
-        jobTitle: "",
-        employer: "",
-        startDate: "",
-        endDate: "",
-        isPresent: "",
-        city: "",
-        description: "",
+        course: "",institution: "",jobTitle: "",employer: "",startDate: "",endDate: "",isPresent: "",city: "",description: "",
       },
     ]);
   };
+
 
   const removecoursesRow = async (i) => {
     if (courses.length > 1) {
@@ -380,16 +323,11 @@ function User() {
     setInternship([
       ...internship,
       {
-        jobTitle: "",
-        employer: "",
-        startDate: "",
-        endDate: "",
-        isPresent: "",
-        city: "",
-        description: "",
+        jobTitle: "",employer: "",startDate: "",endDate: "",isPresent: "",city: "",description: "",
       },
     ]);
   };
+
 
   const removeinternshipRow = async (i) => {
     if (internship.length > 1) {
@@ -402,12 +340,7 @@ function User() {
     setExtraCurricularActivities([
       ...extraCurricularActivities,
       {
-        schoolName: "",
-        degreeName: "",
-        startDate: "",
-        enddate: "",
-        isPresent: "",
-        description: "",
+        schoolName: "",degreeName: "",startDate: "",enddate: "",isPresent: "",description: "",
       },
     ]);
   };
@@ -472,7 +405,6 @@ function User() {
       extraCurricularActivities: extraCurricularActivities,
       languages: languages,
       references: references,
-      hobbies: hobbies,
     };
     const response = await adminResume(dat);
     console.log(response, "respoonse");
@@ -500,8 +432,6 @@ function User() {
                       <Form.Group>
                         <h6 className="text-uppercase">JOb Title</h6>
                         <Form.Control
-                          id="exampleInputtext"
-                          aria-describedby="textHelp"
                           placeholder="job_title"
                           type="text"
                           value={job_title}
@@ -550,23 +480,11 @@ function User() {
                       <Form.Group>
                         <h6>Email</h6>
                         <Form.Control
-                        className={
-                                    emailError
-                                      ? "form-control is-invalid"
-                                      : "form-control"
-                                  }
-                                  id="exampleInputtext"
-                                  aria-describedby="textHelp"
                           placeholder="email"
                           type="email"
                           value={email}
                           onChange={(e) => handleemail(e.target.value)}
                         ></Form.Control>
-                        {emailError && (
-                                <div className="invalid-feedback">
-                                  Please enter valid email
-                                </div>
-                              )}
                       </Form.Group>
                     </Col>
                   </Row>
@@ -575,26 +493,11 @@ function User() {
                       <Form.Group>
                         <h6>Mobile</h6>
                         <Form.Control
-                          className={
-                            phoneError
-                              ? "form-control is-invalid"
-                              : "form-control"
-                          }
-                          id="exampleInputtext"
-                          aria-describedby="textHelp"
                           placeholder="Mobile"
                           type="number"
-                          maxLength={10}
                           value={phone}
                           onChange={(e) => handleMobileChange(e.target.value)}
                         ></Form.Control>
-                        {phoneError ? (
-                          <div className="invalid-feedback">
-                            Please enter valid Phone Number
-                          </div>
-                        ) : (
-                          ""
-                        )}
                       </Form.Group>
                     </Col>
                     <Col className="pr-1" md="4">
@@ -697,42 +600,30 @@ function User() {
                       <Form.Group>
                         <h6>Date Of birth</h6>
                         <Form.Control
-                          className={
-                            dobError
-                              ? "form-control is-invalid"
-                              : "form-control"
-                          }
-                          id="exampleInputtext"
-                          aria-describedby="textHelp"
                           placeholder="place Of birth"
                           type="date"
                           value={dateOfbirth}
                           onChange={(e) => handleDateOfbirth(e.target.value)}
                         ></Form.Control>
-                        {dobError && (
-                          <div className="invalid-feedback">
-                            Please valid date of birth
-                          </div>
-                        )}
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="6">
                       <div className="app">
-                        <h5>Select your Hobbies</h5>
-                        <div className="dropdown-container">
-                          <Select
-                            options={optionList}
-                            type="text"
-                            placeholder="Select color"
-                            // value={hobbies}
-                            onChange={(e) => handleHobbies(e)}
-                            isSearchable={true}
-                            isMulti
-                          />
-                        </div>
+                       <h5>Select your Hobbies</h5>
+                       <div className="dropdown-container">
+                        <Select
+                          options={optionList}
+                          type="text"
+                          placeholder="Select color"
+                          value={hobbies}
+                          onChange={handleHobbies}
+                          isSearchable={true}
+                          isMulti
+                        />
                       </div>
+                    </div>
                     </Col>
                   </Row>
 
@@ -1232,7 +1123,7 @@ function User() {
                             <h5> Internship </h5>
                             <div className="editDetail">
                               <a
-                                style={{ float: "right" }}
+                                style={{float: "right"}}
                                 className="btn addBtn row-12"
                                 type="button"
                                 onClick={handleinternshipFields}
@@ -1381,9 +1272,7 @@ function User() {
                               <div className="text-center">
                                 <span
                                   className="closeBtn"
-                                  onClick={(e) =>
-                                    removeextraCurricularActivitiesRow(i)
-                                  }
+                                  onClick={(e) => removeextraCurricularActivitiesRow(i)}
                                 >
                                   <FaTimes />
                                 </span>
@@ -1512,6 +1401,7 @@ function User() {
                       )}
                     </div>
                   </div>
+
 
                   <div className="identityBox borderT">
                     <div className="identificationDocument">
@@ -1672,7 +1562,7 @@ function User() {
                     type="submit"
                     variant="info"
                   >
-                    Update Profile
+                    Update Resume
                   </Button>
                   <div className="clearfix"></div>
                 </Form>
@@ -1685,4 +1575,4 @@ function User() {
   );
 }
 
-export default User;
+export default EditResume;

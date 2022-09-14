@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useHistory, Link,useParams } from "react-router-dom";
-import { updateUser,adminUserAdd } from "../../Service/auth";
+import { updateUser, GetUserById } from "../../Service/auth";
 // import { Col } from "react-bootstrap";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,13 +25,13 @@ const editUser = () => {
     });
     useEffect(() => {
       const getData = async () => {
-        const response = await adminUserAdd();
+        const response = await GetUserById();
         console.log("getAdmin", response);
-        setUsers(response?.data?.results);
+        setUsers(response?.data?.data?.id);
           
       };
       getData();
-    }, []);
+    }, [id]);
     console.log("setAdminInfo",users);
 
 
@@ -135,7 +135,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your Email"
               name="email"
-            value={email}
+            value={users?.email}
             onChange={(e) => handleEmailChange(e.target.value)}
             />
           </div>
@@ -145,7 +145,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your Name"
               name="name"
-              value={name}
+              value={users?.name}
             onChange={(e) => handleName(e.target.value)}
             />
           </div>
@@ -155,7 +155,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your role"
               name="role"
-              value={role}
+              value={users?.role}
             onChange={(e) => handleRoleChange(e.target.value)}
             />
           </div>
@@ -165,7 +165,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your phone number"
               name="phone"
-              value={phone}
+              value={users?.phone}
             onChange={(e) => handleMobileChange(e.target.value)}
             />
           </div>
@@ -175,7 +175,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your gender"
               name="dob"
-              value={dob}
+              value={users?.dob}
             onChange={(e) => handledobChange(e.target.value)}
             />
           </div>
@@ -185,7 +185,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your gender"
               name="gender"
-              value={gender}
+              value={users?.gender}
             onChange={(e) => handleGenderChange(e.target.value)}
             />
           </div>
@@ -195,7 +195,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your Address"
               name="address"
-              value={address}
+              value={users?.address}
             onChange={(e) => handleAddressChange(e.target.value)}
             />
           </div>
@@ -205,7 +205,7 @@ const editUser = () => {
               className="form-control form-control-lg"
               placeholder="Enter Your ZipCode"
               name="zipcode"
-              value={zipcode}
+              value={users?.zipcode}
             onChange={(e) => handleZipCodeChange(e.target.value)}
             />
           </div>

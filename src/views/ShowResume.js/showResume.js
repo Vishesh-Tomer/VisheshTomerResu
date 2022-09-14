@@ -3,6 +3,20 @@ import "./Styleresume.scss"
 import { getResume } from "Service/auth";
 import { useHistory } from "react-router-dom";
 
+// react-bootstrap components
+import {
+  Badge,
+  Button,
+  Card,
+  Form,
+  Navbar,
+  Nav,
+  Container,
+  Row,
+  Col
+} from "react-bootstrap";
+
+
 function showResume() {
 
   const history = useHistory();
@@ -367,7 +381,7 @@ function showResume() {
                         </a> */}
                         <h6>Software Engineer Extraordinaire</h6>
                         <hr />
-                    </header>
+                    </header> 
                     <section>
                         <section className="summary">
                             <h6>Summary</h6>
@@ -454,6 +468,20 @@ function showResume() {
                 </section>
             </section>
         </section>
+        <Row>
+              <Col xs="12">
+                  <div className="editDetail">
+                    <button
+                      className="btn addBtn"
+                      onClick={() => {
+                        history.push("/editresume");
+                      }}
+                    >
+                      Update Resume
+                    </button>
+                  </div>
+                </Col>
+          </Row>
      
     </>
   );

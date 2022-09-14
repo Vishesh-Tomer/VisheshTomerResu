@@ -1,16 +1,20 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Modal, Input } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
-import { adminUserAdd, adminUserCreate, deleteUser } from "Service/auth";
+
+import { Button, Modal, Input, Container, Row, Col, Card, Table } from "react-bootstrap";
+import React, { useEffect, useState, useMemo } from "react";
+import { adminUserAdd, adminUserCreate, deleteUserById } from "Service/auth";
 import { useHistory } from "react-router-dom";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import Pagination from './Pagination';
+
+let PageSize = 10;
 
 function Home() {
 
 
   const history = useHistory();
+  const [currentPage, setCurrentPage] = useState(1);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -39,6 +43,12 @@ function Home() {
       getData();
     }, []);
     console.log("setAdminInfo",users);
+
+    const currentTableData = useMemo(() => {
+      const firstPageIndex = (currentPage - 1) * PageSize;
+      const lastPageIndex = firstPageIndex + PageSize;
+      return users.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage]);
 
     
 
@@ -80,16 +90,16 @@ function Home() {
 
 
 
-  const deleteListItems = async () => {
-    const response = await deleteUser();
+  const deleteListItems = async (id) => {
+    const response = await deleteUserById(id);
      console.log("del", response);
     if (response.code === 200) {
-      getDocumentLists();
       toast.success(response.message, "green");
     } else {
       toast.error(response.message, "red");
     }
   };  
+
 
 
   return (
@@ -136,7 +146,74 @@ function Home() {
             </Button>
           </div>
         </div>
-        <div className="row">
+        <Container fluid>
+        <Row>
+          <Col md="12">
+            <Card className="strpied-tabled-with-hover">
+              <Card.Header>
+                <Card.Title as="h4">Striped Table with Hover</Card.Title>
+              </Card.Header>
+              <Card.Body className="table-full-width table-responsive px-0">
+                <Table className="table-hover table-striped">
+                  <thead>
+                  <tr>
+                  <th>#</th>
+                  <th className="border-0">Email</th>
+                  <th className="border-0">Name</th>
+                  <th className="border-0">Role </th>
+                  <th className="border-0">phone </th>
+                  <th className="border-0">Date of Birth</th>
+                  <th className="border-0">Gender </th>
+                  <th className="border-0">Address</th>
+                  <th className="border-0">Zipcode </th>
+                  <th className="border-0">Action</th>
+                </tr>
+                  </thead>
+                  <tbody>
+              {currentTableData.map((user, index) => (
+              <tr>
+                <th>{index + 1}</th>
+                <td>{user?.email}</td>
+                <td>{user?.name}</td>
+                <td>{user?.role}</td>
+                <td>{user?.phone}</td>
+                <td>{user?.dob}</td>
+                <td>{user?.gender}</td>
+                <td>{user?.address}</td>
+                <td>{user?.zipcode}</td>
+                <td>
+                  <Link
+                    className="btn btn-outline-primary"
+                    onClick={() => {
+                        history.push(`/edituser/${user?.id}`)
+                      }}
+                  >
+                    Edit
+                  </Link>
+                  <Link
+                    className="btn btn-danger"
+                    onClick={() => deleteListItems(user?.id)}
+                  >
+                    Delete
+                  </Link>
+                </td>
+              </tr>
+              ))}
+          </tbody>
+                </Table>
+                <Pagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={users.length}
+        pageSize={PageSize}
+        onPageChange={page => setCurrentPage(page)}
+      />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+        {/* <div className="row">
           <div className="table-responsive ">
             <table className="table table-striped table-hover table-bordered">
               <thead>
@@ -176,7 +253,7 @@ function Home() {
                   </Link>
                   <Link
                     className="btn btn-danger"
-                    onClick={() => deleteListItems()}
+                    onClick={() => deleteListItems(user?.id)}
                   >
                     Delete
                   </Link>
@@ -186,7 +263,7 @@ function Home() {
           </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
 
         {/* <!--- Model Box ---> */}
         <div className="model_box">

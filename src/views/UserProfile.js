@@ -39,8 +39,7 @@ function User() {
   console.log(id)
   useEffect(() => {
     const getData = async () => {
-      //  localStorage.setItem("adminId", { id });
-      const response = await getAdmin({ id });
+      const response = await getAdmin();
       console.log("getAdmin", response);
         setAdminInfo(response?.data);   
     };
@@ -83,7 +82,7 @@ function User() {
                 </p>
               </Card.Body>
               <Row>
-              <Col  style={{textAlign : 'center'}} xs="2">
+              <Col xs="2">
                   <div className="login-login">
                     <button
                       className="btn btn-login cursor-pointer"

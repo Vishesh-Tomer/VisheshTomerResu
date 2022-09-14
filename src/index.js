@@ -31,6 +31,7 @@ import ChangePass from "views/ChangePassword";
 import Register from "views/Register";
 import UpdateAdmin from "views/UpdateAdmin/Index"
 import EditUser from "views/ManageUser/editUser";
+import EditResume from "views/EditResume/index";
 
 
 import AdminLayout from "layouts/Admin.js";
@@ -60,6 +61,9 @@ root.render(
       </Route>
       <Route path="/updateadmin">
         <UpdateAdmin/>
+      </Route>
+      <Route path="/editresume">
+        <EditResume/>
       </Route>
       <Redirect from="/" to="/admin/dashboard" />
       

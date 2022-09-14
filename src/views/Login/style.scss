@@ -52,3 +52,46 @@
         color: #fff !important;
     }
 }
+
+.invalid-feedback {
+    text-align: left !important;
+    margin: 5px 0 0 10px !important;
+  }
+
+  .login_with_pass{
+    border-right: 1px solid #bfbfbf;
+    padding-right: 25px;
+  }
+
+  .login_with_pass{
+    border-right: none;
+    border-bottom: 1px solid #bfbfbf;
+    padding-right: 0;
+    padding-bottom: 25px;
+  }
+
+  .form-group {
+    position: relative;
+    margin: 15px 0;
+    .form-control {
+      background-color: #f7f8fc;
+      color: #a0a7b9;
+      border-radius: 10px;
+      border-color: #c2d4da;
+      padding-right: 35px;
+      min-height: 40px;
+      &:focus {
+        border-color: #919191;
+      }
+      &::placeholder{
+        color: #a0a7b9;
+      }
+    }
+    span {
+      position: absolute;
+      top: 40%;
+      right: 15px;
+      transform: translateY(-40%);
+      color: #676767;
+    }
+  }
