@@ -1,20 +1,16 @@
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal, Input, Container, Row, Col, Card, Table } from "react-bootstrap";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { adminUserAdd, adminUserCreate, deleteUserById } from "Service/auth";
 import { useHistory } from "react-router-dom";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
-import Pagination from './Pagination';
-
-let PageSize = 10;
 
 function Home() {
 
 
   const history = useHistory();
-  const [currentPage, setCurrentPage] = useState(1);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -43,12 +39,6 @@ function Home() {
       getData();
     }, []);
     console.log("setAdminInfo",users);
-
-    const currentTableData = useMemo(() => {
-      const firstPageIndex = (currentPage - 1) * PageSize;
-      const lastPageIndex = firstPageIndex + PageSize;
-      return users.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage]);
 
     
 
@@ -99,7 +89,6 @@ function Home() {
       toast.error(response.message, "red");
     }
   };  
-
 
 
   return (
@@ -170,7 +159,7 @@ function Home() {
                 </tr>
                   </thead>
                   <tbody>
-              {currentTableData.map((user, index) => (
+              {users.map((user, index) => (
               <tr>
                 <th>{index + 1}</th>
                 <td>{user?.email}</td>
@@ -201,13 +190,6 @@ function Home() {
               ))}
           </tbody>
                 </Table>
-                <Pagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={users.length}
-        pageSize={PageSize}
-        onPageChange={page => setCurrentPage(page)}
-      />
               </Card.Body>
             </Card>
           </Col>
