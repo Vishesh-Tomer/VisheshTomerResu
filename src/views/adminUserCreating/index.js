@@ -162,13 +162,12 @@ function User() {
   };
   const handleemail = (value) => {
     setEmail(value);
-    const regex =
-    /^[A-Za-z0-2._]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
-  if (regex.test(value) === false) {
-    setEmailError(true);
-  } else {
-    setEmailError(false);
-  }
+    const regex = /^[A-Za-z0-2._]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
+    if (regex.test(value) === false) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
   };
   const handleName = (value) => {
     setFirstName(value);
@@ -550,23 +549,23 @@ function User() {
                       <Form.Group>
                         <h6>Email</h6>
                         <Form.Control
-                        className={
-                                    emailError
-                                      ? "form-control is-invalid"
-                                      : "form-control"
-                                  }
-                                  id="exampleInputtext"
-                                  aria-describedby="textHelp"
+                          className={
+                            emailError
+                              ? "form-control is-invalid"
+                              : "form-control"
+                          }
+                          id="exampleInputtext"
+                          aria-describedby="textHelp"
                           placeholder="email"
                           type="email"
                           value={email}
                           onChange={(e) => handleemail(e.target.value)}
                         ></Form.Control>
                         {emailError && (
-                                <div className="invalid-feedback">
-                                  Please enter valid email
-                                </div>
-                              )}
+                          <div className="invalid-feedback">
+                            Please enter valid email
+                          </div>
+                        )}
                       </Form.Group>
                     </Col>
                   </Row>
