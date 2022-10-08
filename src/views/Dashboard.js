@@ -1,7 +1,8 @@
 import React ,{useEffect}from "react";
 import ChartistGraph from "react-chartist";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // react-bootstrap components
 import {
   Badge,
@@ -20,6 +21,7 @@ import {
 
 function Dashboard() {
   const history = useHistory();
+ 
 
   const token = localStorage.getItem("token")
 
@@ -30,12 +32,14 @@ function Dashboard() {
         "yellow"
       );
       history.push(`/login`);
+      // toast.success("Admin Login successfully");
     }
   }, []);
 
 
   return (
     <>
+    <ToastContainer />
       <Container fluid>
         <Row>
           <Col lg="3" sm="6">

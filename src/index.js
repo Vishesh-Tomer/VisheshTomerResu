@@ -27,11 +27,14 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Login from "views/Login/Index";
 import ForgetPass from "views/ForgetPassword";
-import ChangePass from "views/ChangePassword";
 import Register from "views/Register";
-import UpdateAdmin from "views/UpdateAdmin/Index"
 import EditUser from "views/ManageUser/editUser";
-import EditResume from "views/EditResume/index";
+import ChangePassword from "views/ChangePassword/index"
+import ViewUser from "views/ManageUser/viewUser"
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import EditResume from "views/EditResume/index";
+// import CreateResume from "views/adminUserCreating/index"
 
 
 import AdminLayout from "layouts/Admin.js";
@@ -56,19 +59,18 @@ root.render(
       <Route path="/edituser/:id">
         <EditUser/>
       </Route>
+      <Route path="/viewuser/:id">
+        <ViewUser/>
+      </Route>
       <Route path="/changepassword">
-        <ChangePass/>
+        <ChangePassword/>
       </Route>
-      <Route path="/updateadmin">
-        <UpdateAdmin/>
-      </Route>
-      <Route path="/editresume">
+      {/* <Route path="/editresume">
         <EditResume/>
-      </Route>
+      </Route> */}
       <Redirect from="/" to="/admin/dashboard" />
-      
-  
     </Switch>
+    <ToastContainer />
   </BrowserRouter>
 
 );

@@ -96,7 +96,10 @@
           }
         }
       }
-      
+      .close_btn_box{
+        display: flex;
+        justify-content: flex-end;
+      }
     }
     &.borderT{
       margin-top: 10px;
@@ -147,9 +150,9 @@
     }
   }
 
-  .editDetail {
+  .editDetail_btn {
     position: absolute;
-    left: 0;
+    right: 0;
     top: 2px;
     display: flex;
     align-items: center;
@@ -170,6 +173,11 @@
         color: #fff;
       }
     }
+
+    // &.history_btn{
+    //   right: 0;
+    //   left: unset;
+    // }
   }
 
   .addBtn {
@@ -196,13 +204,18 @@
   //   align-items: center;
   //   height: 100vh;
   // }
-  // .dropdown-container {
-  //   width: 300px;
-  // }
+  .dropdown-container {
+    width: 590px;
+    background-color: #6c757d;
+  }
 
   .invalid-feedback {
-    text-align: left !important;
-    margin: 5px 0 0 10px !important;
+    display: block ; 
+    width: 100%;
+    // margin-top: 0.25rem;
+    margin: -15px 0 0 0px;
+    font-size: .875em;
+    color: #dc3545;
   }
 
   .login_with_pass{
@@ -241,4 +254,159 @@
       transform: translateY(-40%);
       color: #676767;
     }
+  }
+  
+  .closeBtn {
+    cursor: pointer !important;
+    margin-left: 5px;
+    line-height: 10px;
+    padding: 5px;
+  }
+
+
+  .identityBox{
+    .identificationDocument{
+      margin-top: 15px;
+      h5{
+        margin: 10px 0 18px; 
+      }
+      .border-1 {
+        .table {
+          .form-group {
+            .form-select#sSelect-0{
+              padding: 0 25px 0 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .identityTitle {
+    position: relative;
+  }
+
+  .editDetail_btn {
+    position: absolute;
+    right: 61px;
+    top: -4px;
+    display: flex;
+    align-items: center;
+    background: #000;
+    border-radius: 5px;
+    a {
+      display: inline-block;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 11px;
+      padding: 5px 8px;
+      span{
+        margin-left: 5px;
+      }
+      i{
+        color: #fff;
+      }
+    }
+  }
+
+  .avatar {
+    margin: 25px 0;
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 20px;
+    .profile-select {
+      opacity: 0;
+      height: 120px;
+      position: absolute;
+      width: 130px;
+      margin: -10px 0 0 25px;
+      cursor: pointer;
+      z-index: 999999;
+    }
+    .profileImg-Img {
+      text-align: center;
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: auto;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+      line-height: 80px;
+    }
+    .profileImg {
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: auto;
+      border-radius: 50%;
+      border: 2px solid #deedf1;
+      background: #f5f9fc;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+      line-height: 75px;
+      img{
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      span {
+        display: inline-block;
+        color: #cecece;
+        font-size: 35px;
+      }
+      .icon {
+        position: absolute;
+        right: -10px;
+        bottom: 0px;
+        .camIcon {
+          border: 1px solid #898989;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #000;
+          span {
+            color: #fff;
+            display: inline-block;
+            font-size: 14px;
+            line-height: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .icon {
+    position: absolute;
+    right: 10px;
+    bottom: 36px;
+    .camIcon {
+      border: 1px solid #898989;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      span {
+        color: #fff;
+        display: inline-block;
+        font-size: 14px;
+        line-height: 0;
+      }
+    }
+  }
+
+  .bck {
+    background-color: #6c757d;
   }

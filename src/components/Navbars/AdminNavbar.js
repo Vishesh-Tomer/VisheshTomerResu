@@ -20,12 +20,16 @@ import { useLocation, useHistory } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 import "./style.scss";
 import routes from "routes.js";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import LogoutIcon from "../../assets/Vector.svg";
 import { Avatar } from "antd";
+import Swal from "sweetalert2";
+import { logout } from "Service/auth";
 
 function Header() {
-  const location = useLocation();
   const history = useHistory();
+  const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
     document.documentElement.classList.toggle("nav-open");
@@ -47,14 +51,38 @@ function Header() {
     return "Brand";
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    history.push("/login")
-  };
+ 
+
+   
+
+  const Logout = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to Logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        history.push("/login");
+        toast.success("Logged out Successfully")
+        
+      }
+    });
+      const response = await logout();
+      console.log(response, "respoonse");
+      if (response?.data?.code === 200) {
+        
+      }
+      
+    }
 
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="dark" expand="lg">
       <Container fluid>
         <div className="d-flex justify-content-center align-items-center ml-2 ml-lg-0">
           <Button
@@ -86,7 +114,6 @@ function Header() {
                 onClick={(e) => e.preventDefault()}
                 className="m-0"
               >
-                <i className="nc-icon nc-palette"></i>
                 <span className="d-lg-none ml-1">Dashboard</span>
               </Nav.Link>
             </Nav.Item>
@@ -203,20 +230,20 @@ function Header() {
               </Dropdown.Menu>
             </Dropdown> */}
             <Nav.Item>
-              <Nav.Link
-                className="m-0"
-              >
-               <div className="logoutbutton">
-              <button className="logButton" onClick={logout}>
-                <Avatar src={LogoutIcon} />
-              </button>
-            </div>
+              <Nav.Link className="m-0">
+                <div className="logoutbutton">
+                  <button className="logButton" onClick={(e) => Logout(e)}>
+                    <Avatar src={LogoutIcon} />
+                  </button>
+                </div>
               </Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>
+      <ToastContainer />
     </Navbar>
+    
   );
 }
 

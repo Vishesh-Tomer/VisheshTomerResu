@@ -41,10 +41,10 @@ export async function LOGIN(requestData) {
     }
   }
 
-  export async function ChangePas(requestData) {
+  export async function ChangePas(requestData, id) {
     axios.defaults.headers.common["Authorization"] = bearerToken;
   
-    var response = await axios.post(`${API_URL}admin/change-password/?id=62b743d8621c06d209092eb9`, requestData);
+    var response = await axios.post(`${API_URL}/admin/change-password/?id=${id}`, requestData);
     if (response) {
       return response;
     } else {
@@ -63,6 +63,19 @@ export async function LOGIN(requestData) {
       return [];
     }
   }
+
+  export async function logout() {
+      
+    axios.defaults.headers.common["Authorization"] = bearerToken;
+      var response = await axios.post(`${API_URL}/admin/auth/logout`, {
+        refreshToken: bearerToken,
+      });
+      if (response) {
+        return response;
+      } else {
+        return {};
+      }
+    }
 
 
 
@@ -122,11 +135,10 @@ export async function LOGIN(requestData) {
 
 // Implement Manager User (Add/Edit/Delete/Active/deactivate) API in admin panel
 
-export async function adminUserAdd() {
+export async function adminUserList(data) {
   axios.defaults.headers.common["Authorization"] = bearerToken;
 
-  var response = await axios.get(`${API_URL}/users`);
-
+  var response = await axios.get(`${API_URL}/users?page=${data?.page}&limit=${data?.limit}&sortBy=asc&`);
   if (response) {
     return response;
   } else {
@@ -184,4 +196,57 @@ export async function getResume(requestData) {
   } else {
     return {};
   }
+}
+
+
+export async function resumeList(data) {
+  axios.defaults.headers.common["Authorization"] = bearerToken;
+
+  var response = await axios.get(`${API_URL}/admin/resume-list?page=${data?.page}&limit=${data?.limit}&sortBy=asc`);
+
+  if (response) {
+    return response;
+  } else {
+    return {};
+  }
+}
+
+export async function updateResume(id, requestData) {
+  axios.defaults.headers.common["Authorization"] = bearerToken;
+
+  var response = await axios.patch(`${API_URL}/admin/adminuserresume/${id}`, requestData);
+
+  if (response) {
+    return response;
+  } else {
+    return {};
+  }
+}
+
+
+  export async function GetResumeById(id) {
+      
+    axios.defaults.headers.common["Authorization"] = bearerToken;
+
+    var response = await axios.get(`${API_URL}/admin/adminuserresume/${id}`);
+
+    if (response) {
+      return response;
+    } else {
+      return {};
+    }
+}
+
+export async function deleteResumeById(id) { 
+
+  axios.defaults.headers.common["Authorization"] = bearerToken;
+
+  var response = await axios.delete(`${API_URL}/admin/adminuserresume/${id}`);
+
+  if (response) {
+    return response;
+  } else {
+    return {};
+  }
+
 }

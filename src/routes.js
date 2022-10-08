@@ -16,16 +16,13 @@
 
 */
 import Dashboard from "views/Dashboard.js";
-import UserProfile from "views/UserProfile.js";
-import TableList from "views/TableList.js";
-import Typography from "views/Typography.js";
-import Icons from "views/Icons.js";
-import Maps from "views/Maps.js";
-import Notifications from "views/Notifications.js";
 import AdminCreate from "views/AdminCreate"
-import AdminUserCreating from "views/adminUserCreating"
+import AdminUserCreating from "views/adminUserCreating/resumeList"
+import CreateResume from "views/adminUserCreating/index"
 import ManageUser from "views/ManageUser/index"
 import AdminUserResume from "views/ShowResume.js/showResume"
+import adminProfile from "views/AdminProfile/index"
+import EditResume from "views/EditResume/index"
 
 const dashboardRoutes = [
   {
@@ -36,27 +33,12 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/adminprofile",
-    name: "Admin Profile",
-    icon: "nc-icon nc-circle-09",
-    component: UserProfile,
-    layout: "/admin"
-  },
-  {
-    path: "/adminusercreating",
+    path: "/resumelist",
     name: "Manage Resume",
     icon: "nc-icon nc-circle-09",
     component: AdminUserCreating,
     layout: "/admin"
   },
-  {
-    path: "/adminuserresume",
-    name: "Show Resume",
-    icon: "nc-icon nc-circle-09",
-    component: AdminUserResume,
-    layout: "/admin"
-  },
-  
   {
     path: "/manageuser",
     name: "Manage User",
@@ -64,6 +46,33 @@ const dashboardRoutes = [
     component: ManageUser,
     layout: "/admin"
   },
+  {
+    path: "/adminprofile",
+    component: adminProfile,
+    layout: "/admin"
+  },
+  {
+    path: "/createresume",
+    component: CreateResume,
+    layout: "/admin"
+  },
+  {
+    path: "/showeresume/:id",
+    component: AdminUserResume,
+    layout: "/admin"
+  },
+  {
+    path: "/editresume/:id",
+    component: EditResume,
+    layout: "/admin"
+  },
+  // {
+  //   path: "/manageuse",
+  //   name: "Manage User",
+  //   icon: "nc-icon nc-circle-09",
+  //   component: AdminCreate,
+  //   layout: "/admin"
+  // },x
   // {
   //   path: "/table",
   //   name: "Table List",

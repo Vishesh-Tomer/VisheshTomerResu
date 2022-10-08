@@ -19,7 +19,7 @@
         font-weight: 400;
         margin: 5px 0px;
         font-size: 20px;
-        color: $default-color;
+        color: #dc3545;
 
         &:hover{
             color: #5e5e5e;
@@ -62,7 +62,7 @@
     .navbar-nav{
         .nav-item{
             .nav-link{
-                color: $default-color;
+                color: #fa1408;
                 padding: $navbar-padding-a;
                 margin: $navbar-margin-a;
                 position: relative;

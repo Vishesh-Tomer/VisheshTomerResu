@@ -1,43 +1,34 @@
 import React, { useState } from "react";
-import { Row, Col, Form } from "react-bootstrap";
-import { useHistory, Link } from "react-router-dom";
+import { Row, Col, Form, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaEnvelope } from "react-icons/fa";
+import { FaEnvelope, FaEyeSlash, FaEye } from "react-icons/fa";
 
 import "./style.scss";
 import { LOGIN } from "../../Service/auth";
 
-const validate = (values) => {
-  const errors = {};
-  if (!values.email) {
-    errors.email = "Please enter valid email";
-  }
-  if (!values.password) {
-    errors.password = "Please enter the Password";
-  }
-  return errors;
-};
-
 function Login() {
   const history = useHistory();
-
   const [email, setEmail] = useState("");
-  const [emailIsRequiredError, setEmailIsRequiredlError] = useState("");
-  const [emailValidError, setEmailValidError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordIsRequiredError, setPasswordIsRequiredlError] =
     useState(false);
+  const [passworderror, setPasswordError] = useState(false);
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const [iserror, setIsError] = useState(false);
   const [error, setError] = useState("");
+  const [toatError, settoatError] = useState(false);
+  const [emailValidError, setEmailValidError] = useState(false);
+  const [emailIsRequiredError, setEmailIsRequiredlError] = useState(false);
 
   const handleEmailChange = (value) => {
     setEmail(value);
-    const regex = /^[A-Za-z0-2._]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
+    const rege = /^[A-Za-z0-9._]{3,}@[A-Za-z]{3,8}[.]{1}[A-Za-z.]{2,6}$/;
     if (value === "") {
       setEmailValidError(false);
       setEmailIsRequiredlError(true);
-    } else if (regex.test(value) === false) {
+    } else if (rege.test(value) === false) {
       setEmailValidError(true);
       setEmailIsRequiredlError(false);
     } else {
@@ -48,27 +39,37 @@ function Login() {
 
   const handlePassword = (value) => {
     setPassword(value);
+    const regex =
+      /^(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
     if (value === "") {
+      setPasswordError(false);
       setPasswordIsRequiredlError(true);
+    } else if (regex.test(value) === false) {
+      setPasswordError(true);
+      setPasswordIsRequiredlError(false);
     } else {
+      setPasswordError(false);
       setPasswordIsRequiredlError(false);
     }
   };
 
-  // const [values, setValues] = useState({
-  //   email: "",
-  //   password: "",
-  // });
+  const handleShowPassword = (event, type) => {
+    event.preventDefault();
+    if (type === "show") {
+      setIsShowPassword(true);
+    } else {
+      setIsShowPassword(false);
+    }
+  };
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setValues({
-  //     ...values,
-  //     [name]: value,
-  //   });
-  // };
   const login = async (e) => {
     e.preventDefault();
+    if (email === "" || !email) {
+      setEmailIsRequiredlError(true);
+    }
+    if (password === "" || !password) {
+      setPasswordIsRequiredlError(true);
+    }
     if (email !== "" && password !== "") {
       let requestData = {
         email: email,
@@ -77,15 +78,16 @@ function Login() {
       const response = await LOGIN(requestData);
       console.log(response, "respoonse");
       if (response?.data.code !== 200) {
-        setError(response.data.message);
+        toast.error("Please Fill Correct Details");
+        setError("Please Fill Correct credentials");
         setIsError(true);
         setTimeout(() => {
           setError("");
           setIsError(false);
         }, 5000);
       } else {
+        toast.success("Logged In Successfully");
         setIsError(false);
-        history.push("/dashboard");
         localStorage.setItem(
           "token",
           response?.data?.data?.tokens.refresh.token
@@ -94,8 +96,8 @@ function Login() {
           "resObj",
           JSON.stringify(response?.data?.data?.admin)
         );
-        history.push("/dashboard");
-        toast.success(response?.data?.message);
+
+        history.push("/admin/dashboard");
       }
     }
   };
@@ -105,25 +107,42 @@ function Login() {
       <div className="main-wrapper-login">
         <div className="Login-wrapper">
           <div className="loginbody--form">
+            <div className="rna-container"></div>
             <Form onSubmit={login}>
               <Row>
                 <Col xs="12">
                   {iserror ? (
                     <div className="alert alert-danger">{error}</div>
                   ) : null}
-                  <Form.Control
+                  <div
+                    className={
+                      emailValidError
+                        ? "form-control is-invalid"
+                        : "input-login-control mb-1"
+                    }
+                  ></div>
+                  <div
                     className={
                       emailIsRequiredError
                         ? "form-control is-invalid"
-                        : "form-control"
+                        : "input-login-control mb-1"
                     }
-                    id="exampleInputtext"
-                    aria-describedby="textHelp"
-                    type="email" 
-                    placeholder="Email"
-                    name="email"
-                    onChange={(e) => handleEmailChange(e.target.value)}
-                  ></Form.Control>
+                  ></div>
+                  <div className="form-group mb-1">
+                    <Form.Control
+                      className="input-login-control"
+                      id="exampleInputtext"
+                      aria-describedby="textHelp"
+                      type="email"
+                      maxLength="40"
+                      placeholder="Email"
+                      name="email"
+                      onChange={(e) => handleEmailChange(e.target.value)}
+                    ></Form.Control>
+                    <span>
+                      <FaEnvelope />
+                    </span>
+                  </div>
                   {emailIsRequiredError && (
                     <div className="invalid-feedback">Email is required</div>
                   )}
@@ -134,45 +153,109 @@ function Login() {
                   )}
                 </Col>
                 <Col xs="12">
-                  <Form.Control
-                  className={
-                      emailIsRequiredError
+                  <div
+                    className={
+                      passwordIsRequiredError
                         ? "form-control is-invalid"
-                        : "form-control"
+                        : "input-login-control mb-1"
                     }
-                    id="exampleInputtext"
-                    aria-describedby="textHelp"
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    onChange={(e) => handlePassword(e.target.value)}
-                  />
+                  ></div>
+                  <div
+                    className={
+                      passworderror
+                        ? "form-control is-invalid"
+                        : "input-login-control mb-1"
+                    }
+                  ></div>
+                  <div className="form-group mb-1">
+                    <Form.Control
+                      type={!isShowPassword ? "password" : "text"}
+                      className="input-login-control mb-1"
+                      id="exampleInputtext"
+                      aria-describedby="textHelp"
+                      placeholder="Password"
+                      name="password"
+                      maxLength="40"
+                      onChange={(e) => handlePassword(e.target.value)}
+                    />
+                    <span>
+                      {!isShowPassword ? (
+                        <FaEye onClick={(e) => handleShowPassword(e, "show")} />
+                      ) : (
+                        <FaEyeSlash
+                          onClick={(e) => handleShowPassword(e, "hide")}
+                        />
+                      )}
+                    </span>
+                  </div>
                   {passwordIsRequiredError && (
                     <div className="invalid-feedback">Password is required</div>
                   )}
+                  {passworderror && (
+                    <div className="invalid-feedback">
+                      Please enter valid<br></br>
+                      *Password Minimum eight characters <br></br>
+                      *at least one uppercase letter [A-Z] <br></br>
+                      *one lowercase letter [a-z]<br></br>
+                      *one number [0-8] <br></br>
+                      *and one special character [! @ # # $ % ^ & *]<br></br>
+                    </div>
+                  )}
                 </Col>
+                <Row>
+                  <Col xs="6">
+                    <div className="forgot--txtlink text-end mb-2">
+                      <span
+                        className="link-forgot cursor-pointer"
+                        onClick={() => {
+                          history.push("/ForgetPassword");
+                        }}
+                      >
+                        <br></br>
+                        Forgot password?
+                      </span>
+                    </div>
+                    <br />
+                  </Col>
+                  <Col className="pope" mr="2">
+                    <div className="forgot--txtlink text-end mb-2">
+                      <span
+                        className="link-forgot cursor-pointer"
+                        onClick={() => {
+                          history.push("/register");
+                        }}
+                      >
+                        <br></br>
+                        Register here?
+                      </span>
+                    </div>
+                    <br />
+                  </Col>
+                  <Col xs="12">
+                    <div className="forgot--txtlink text-end mb-2">
+                      <span
+                        className="link-forgot cursor-pointer"
+                        onClick={() => {
+                          history.push("/register");
+                        }}
+                      >
+                        Change password?
+                      </span>
+                    </div>
+                  </Col>
+                </Row>
 
-                <Col xs="6">
-                  <div className="forgot--txtlink text-end mb-5">
-                    <span
-                      className="link-forgot cursor-pointer"
-                      onClick={() => {
-                        history.push("/ForgetPassword");
-                      }}
-                    >
-                      Forgot password?
-                    </span>
-                  </div>
-                </Col>
                 <Col xs="12">
-                  <div className="login-login">
-                    <button
-                      type="submit"
-                      className="btn btn-login cursor-pointer"
-                    >
-                      Login
-                    </button>
-                    <ToastContainer />
+                  <div className="col-md-12">
+                    <div className="notReg">
+                      <Button
+                        variant="default"
+                        type="submit"
+                        className="btn btn-login cursor-pointer"
+                      >
+                        Login
+                      </Button>
+                    </div>
                   </div>
                 </Col>
               </Row>
@@ -180,67 +263,7 @@ function Login() {
           </div>
         </div>
       </div>
-      {/* <div className="col-md-6">
-                    <form onSubmit={login}>
-                      <h4>LogIn with Email/Password</h4>
-                      <div className="login_with_pass">
-                        {iserror ? (
-                          <div className="alert alert-danger">{error}</div>
-                        ) : null}
-                        <div className="form-group">
-                          <input
-                            type="email"
-                            className="form-control"
-                            onChange={(e) => handleEmailChange(e.target.value)}
-                            id="exampleInputEmail1"
-                            aria-describedby="emailHelp"
-                            placeholder="Email Address"
-                            required
-                          />
-                          <span>
-                            <FaEnvelope />
-                          </span>
-                        </div>
-                        {emailIsRequiredError && (
-                          <div className="invalid-feedback">
-                            Email is required
-                          </div>
-                        )}
-                        {emailValidError && (
-                          <div className="invalid-feedback">
-                            Please enter valid email
-                          </div>
-                        )}
-                        <div className="form-group">
-                          <input
-                            type="password"
-                            onChange={(e) => handlePassword(e.target.value)}
-                            className="form-control"
-                            id="exampleInputPassword1"
-                            placeholder="Password"
-                            required
-                          />
-                        </div>
-                        {passwordIsRequiredError && (
-                          <div className="invalid-feedback">
-                            Password is required
-                          </div>
-                        )}
-                        <div className="forgot-password">
-                          <Link to="/guard/forgot-password">
-                            Forgot Password?
-                          </Link>
-                        </div>
-                        <div className="loginBtn">
-                          <button
-                            type="submit"
-                          >
-                          </button>
-                          {/* <LoginForm onSubmit={props => this.doLogin(props)} {...this.props} loading={this.state.loading} passwordType={this.state.passwordType} toggleShowPassword={this.toggleShowPassword.bind(this)} /> */}
-      {/* </div>
-                      </div>
-                    </form>
-                  </div> */}
+      <ToastContainer autoClose={3000} />
     </>
   );
 }

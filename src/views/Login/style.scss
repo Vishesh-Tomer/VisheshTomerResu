@@ -42,7 +42,7 @@
     .btn-login {
         background-color: #b50f0f !important;
         width: 100% !important;
-        border-radius: 30px !important;
+        border-radius: 25px !important;
         color: #fff !important;
         font-size: 15px !important;
         font-weight: 700 !important;
@@ -94,4 +94,26 @@
       transform: translateY(-40%);
       color: #676767;
     }
+  }
+
+  .notReg {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #bfbfbf;
+    p {
+      text-align: center;
+      color: #6f8b99;
+      font-weight: 500;
+      font-size: 14px;
+      .signupBtn {
+        font-size: 15px;
+        display: inline-block;
+        font-weight: 600;
+        color: #000000;
+      }
+    }
+  }
+
+  .pope{
+    margin-left: 176px;
   }
